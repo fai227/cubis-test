@@ -1,6 +1,6 @@
 #pragma once
 
-class InputManager
+class AudioManager
 {
 public:
     static void Init();

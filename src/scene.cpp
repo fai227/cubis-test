@@ -1,21 +1,30 @@
 #include "scene.hpp"
-#include "input.hpp"
-#include "modal.hpp"
+#include "ui.hpp"
+#include <vector>
 
-void SceneManager::Update(Rectangle target)
+void Scene::Update()
 {
-    InputManager::Update();
-
-    if (isTransitioning)
+    for (UIElement *element : uiElements)
     {
-        nextScene->Update();
+        if (element->isVisible)
+        {
+            element->Draw();
+        }
     }
+}
 
-    currentScene->Update();
-
-    if (ModalManager::ModalExists())
+Scene::~Scene()
+{
+    for (UIElement *element : uiElements)
     {
-        Modal *modal = ModalManager::GetFirstModal();
-        modal->Draw();
+        delete element;
     }
+}
+
+BlankScene::BlankScene()
+{
+    // UI要素の初期化
+    uiElements.push_back(new Text({10, 10, 200, 50}, "Blank Scene"));
+    uiElements.push_back(new Button({10, 70, 200, 50}, "Button 1"));
+    uiElements.push_back(new Button({10, 130, 200, 50}, "Button 2"));
 }

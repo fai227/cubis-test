@@ -29,7 +29,7 @@ enum class ColorPallet
     Cyan,
 };
 
-class Setting
+class SettingManager
 {
 private:
     static rini_config config;
@@ -38,6 +38,8 @@ private:
 
 public:
     static void Init();
+    static void Update();
+    static void Unload();
 
     static void SetTheme(Theme);
     static Theme GetTheme();

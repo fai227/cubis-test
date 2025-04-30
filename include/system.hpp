@@ -1,6 +1,6 @@
 #pragma once
 
-class InputManager
+class SystemManager
 {
 public:
     static void Init();

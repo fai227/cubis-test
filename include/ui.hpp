@@ -1,6 +1,7 @@
 #pragma once
 
 #include "raylib.h"
+#include <string>
 
 class UIElement
 {
@@ -10,34 +11,35 @@ protected:
 public:
     bool isVisible;
     bool isEnabled;
-    virtual void Draw(RenderTexture2D target) = 0;
+    virtual void Draw() {};
 };
 
 class Text : public UIElement
 {
 private:
-    char *label;
+    std::string label;
 
 public:
-    Text(Rectangle, char *);
-    void Draw(RenderTexture2D target) override;
+    Text(Rectangle, std::string);
+    void Draw() override;
 };
 
 class Button : public UIElement
 {
 private:
-    char *label;
+    std::string label;
 
 public:
     bool isVisible;
     bool isEnabled;
     bool isSelected;
 
-    Button *navigationUp;
-    Button *navigationDown;
-    Button *navigationLeft;
-    Button *navigationRight;
+    Button *up;
+    Button *down;
+    Button *left;
+    Button *right;
 
-    Button(Rectangle, char *, Button *, Button *, Button *, Button *);
-    void Draw(RenderTexture2D target) override;
+    Button(Rectangle, std::string);
+    void Draw() override;
+    void SetNavigation(Button *up, Button *down, Button *left, Button *right);
 };

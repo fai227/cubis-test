@@ -1,28 +1,34 @@
 #include "ui.hpp"
+#include <string>
+
 #include "raylib.h"
 
-Text::Text(Rectangle _bounds, char *_label)
+Text::Text(Rectangle _bounds, std::string _label)
 {
     bounds = _bounds;
     label = _label;
 };
 
-void Text::Draw(RenderTexture2D target)
+void Text::Draw()
 {
-    DrawText(label, bounds.x, bounds.y, 20, WHITE);
+    DrawText(label.c_str(), bounds.x, bounds.y, 20, WHITE);
 }
 
-Button::Button(Rectangle _bounds, char *_label, Button *_navigationUp, Button *_navigationDown, Button *_navigationLeft, Button *_navigationRight)
+Button::Button(Rectangle _bounds, std::string _label)
 {
     bounds = _bounds;
     label = _label;
-    navigationUp = _navigationUp;
-    navigationDown = _navigationDown;
-    navigationLeft = navigationLeft;
-    navigationRight = navigationRight;
 }
 
-void Button::Draw(RenderTexture2D target)
+void Button::SetNavigation(Button *_up, Button *_down, Button *_left, Button *_right)
+{
+    up = _up;
+    down = _down;
+    left = _left;
+    right = _right;
+}
+
+void Button::Draw()
 {
     if (isSelected)
     {
@@ -33,5 +39,5 @@ void Button::Draw(RenderTexture2D target)
         DrawRectangleRec(bounds, GRAY);
     }
 
-    DrawText(label, bounds.x + 10, bounds.y + 10, 20, WHITE);
+    DrawText(label.c_str(), bounds.x + 10, bounds.y + 10, 20, WHITE);
 }

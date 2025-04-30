@@ -1,24 +1,31 @@
 #pragma once
 
+#include <vector>
+#include "ui.hpp"
 #include "raylib.h"
 
 class Scene
 {
+protected:
+    std::vector<UIElement *> uiElements;
+
 public:
-    virtual void Init() {}
-    virtual void Start() {}
-    virtual void Update() {}
-    virtual void Pause() {}
-    virtual void End() {}
-    virtual void Unload() {}
+    virtual void Enable() {}
+    virtual void Update();
+    virtual void Disable() {}
+    virtual ~Scene();
 };
 
-class SceneManager
+class BlankScene : public Scene
 {
 public:
-    static bool isTransitioning;
-    static Scene *currentScene;
-    static Scene *nextScene;
+    BlankScene();
+};
 
-    static void Update(Rectangle target);
+class TitleScene : public Scene
+{
+};
+
+class GameScene : public Scene
+{
 };

@@ -2,37 +2,45 @@
 #include "rini.h"
 #include "constants.hpp"
 
-rini_config Setting::config;
+rini_config SettingManager::config;
 
-void Setting::SaveConfig()
+void SettingManager::SaveConfig()
 {
-    rini_save_config(config, DisplayText::CONFIG_FILE_NAME);
+    rini_save_config(config, DisplayText::CONFIG_FILE_NAME.c_str());
 }
-void Setting::Init()
+void SettingManager::Init()
 {
-    config = rini_load_config(DisplayText::CONFIG_FILE_NAME);
+    config = rini_load_config(DisplayText::CONFIG_FILE_NAME.c_str());
 
     UpdateWindow();
     UpdateMaxFPS();
 }
 
-void Setting::SetTheme(Theme theme)
+void SettingManager::Update()
 {
-    rini_set_config_value(&config, DisplayText::THEME, static_cast<int>(theme), NULL);
+}
+
+void SettingManager::Unload()
+{
+}
+
+void SettingManager::SetTheme(Theme theme)
+{
+    rini_set_config_value(&config, DisplayText::THEME.c_str(), static_cast<int>(theme), NULL);
     SaveConfig();
 }
 
-Theme Setting::GetTheme()
+Theme SettingManager::GetTheme()
 {
-    int theme = rini_get_config_value(config, DisplayText::THEME);
+    int theme = rini_get_config_value(config, DisplayText::THEME.c_str());
     if (theme == 0)
         return DefaultSetting::DEFAULT_THEME;
     return static_cast<Theme>(theme);
 }
 
-Color Setting::GetColor(ColorPallet colorPallet)
+Color SettingManager::GetColor(ColorPallet colorPallet)
 {
-    if (Setting::GetTheme() == Theme::Light)
+    if (SettingManager::GetTheme() == Theme::Light)
     {
         switch (colorPallet)
         {
@@ -57,7 +65,7 @@ Color Setting::GetColor(ColorPallet colorPallet)
         }
     }
 
-    if (Setting::GetTheme() == Theme::Dark)
+    if (SettingManager::GetTheme() == Theme::Dark)
     {
         switch (colorPallet)
         {
@@ -85,62 +93,62 @@ Color Setting::GetColor(ColorPallet colorPallet)
     return BLANK;
 }
 
-WindowMode Setting::GetWindowMode()
+WindowMode SettingManager::GetWindowMode()
 {
-    int windowMode = rini_get_config_value(config, DisplayText::WINDOW_MODE);
+    int windowMode = rini_get_config_value(config, DisplayText::WINDOW_MODE.c_str());
     if (windowMode == 0)
         return DefaultSetting::DEFAULT_WINDOW_MODE;
     return static_cast<WindowMode>(windowMode);
 }
 
-void Setting::SetWindowMode(WindowMode windowMode)
+void SettingManager::SetWindowMode(WindowMode windowMode)
 {
-    rini_set_config_value(&config, DisplayText::WINDOW_MODE, static_cast<int>(windowMode), NULL);
+    rini_set_config_value(&config, DisplayText::WINDOW_MODE.c_str(), static_cast<int>(windowMode), NULL);
     SaveConfig();
 
     UpdateWindow();
 }
 
-int Setting::GetMonitorID()
+int SettingManager::GetMonitorID()
 {
-    int monitorID = rini_get_config_value(config, DisplayText::MONITOR_ID);
+    int monitorID = rini_get_config_value(config, DisplayText::MONITOR_ID.c_str());
     if (monitorID == 0)
         return DefaultSetting::DEFAULT_MONITOR_ID;
     return monitorID;
 }
 
-void Setting::SetMonitorID(int monitorID)
+void SettingManager::SetMonitorID(int monitorID)
 {
-    rini_set_config_value(&config, DisplayText::MONITOR_ID, monitorID, NULL);
+    rini_set_config_value(&config, DisplayText::MONITOR_ID.c_str(), monitorID, NULL);
     SaveConfig();
 
     UpdateWindow();
 }
 
-int Setting::GetMaxFPS()
+int SettingManager::GetMaxFPS()
 {
-    int targetFPS = rini_get_config_value(config, DisplayText::MAX_FPS);
+    int targetFPS = rini_get_config_value(config, DisplayText::MAX_FPS.c_str());
     if (targetFPS == 0)
         return DefaultSetting::DEFAULT_MAX_FPS;
     return targetFPS;
 }
 
-void Setting::SetMaxFPS(int targetFPS)
+void SettingManager::SetMaxFPS(int targetFPS)
 {
-    rini_set_config_value(&config, DisplayText::MAX_FPS, targetFPS, NULL);
+    rini_set_config_value(&config, DisplayText::MAX_FPS.c_str(), targetFPS, NULL);
     SaveConfig();
 
     UpdateMaxFPS();
 }
 
-void Setting::UpdateWindow()
+void SettingManager::UpdateWindow()
 {
-    int monitorID = Setting::GetMonitorID() - 1;
+    int monitorID = SettingManager::GetMonitorID() - 1;
     Vector2 monitorPosition = GetMonitorPosition(monitorID);
     int monitorWidth = GetMonitorWidth(monitorID);
     int monitorHeight = GetMonitorHeight(monitorID);
 
-    switch (Setting::GetWindowMode())
+    switch (SettingManager::GetWindowMode())
     {
     case WindowMode::Windowed:
         ClearWindowState(FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_MAXIMIZED);
@@ -159,7 +167,7 @@ void Setting::UpdateWindow()
     }
 }
 
-void Setting::UpdateMaxFPS()
+void SettingManager::UpdateMaxFPS()
 {
-    SetTargetFPS(Setting::GetMaxFPS());
+    SetTargetFPS(SettingManager::GetMaxFPS());
 }
