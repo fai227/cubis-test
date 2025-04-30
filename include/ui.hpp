@@ -10,8 +10,8 @@ protected:
 
 public:
     bool isVisible;
-    bool isEnabled;
-    virtual void Draw() {};
+    UIElement();
+    virtual void Draw(Vector2 size) {};
 };
 
 class Text : public UIElement
@@ -20,8 +20,8 @@ private:
     std::string label;
 
 public:
-    Text(Rectangle, std::string);
-    void Draw() override;
+    Text(Rectangle _bounds, std::string _label);
+    void Draw(Vector2 size) override;
 };
 
 class Button : public UIElement
@@ -30,7 +30,6 @@ private:
     std::string label;
 
 public:
-    bool isVisible;
     bool isEnabled;
     bool isSelected;
 
@@ -39,7 +38,13 @@ public:
     Button *left;
     Button *right;
 
-    Button(Rectangle, std::string);
-    void Draw() override;
-    void SetNavigation(Button *up, Button *down, Button *left, Button *right);
+    Button(Rectangle _bounds, std::string _label);
+    void Draw(Vector2 size) override;
+    void SetNavigation(Button *_up, Button *_down, Button *_left, Button *_right);
 };
+
+namespace UI
+{
+    Rectangle GetScreenBounds(Vector2 size, Rectangle bounds);
+    void DrawTextInsideRectangle(Rectangle bounds, std::string text, Color color);
+}

@@ -15,7 +15,7 @@ private:
     bool defaultLeftSelected;
 
 public:
-    Modal(std::string, std::string, std::string, std::function<void()>, std::function<void()>, bool);
+    Modal(std::string message, std::string leftButtonText, std::string rightButtonText, std::function<void()> leftButtonCallback, std::function<void()> rightButtonCallback, bool defaultLeftSelected);
     void Draw();
 };
 

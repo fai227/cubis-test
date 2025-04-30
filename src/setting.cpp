@@ -48,6 +48,8 @@ Color SettingManager::GetColor(ColorPallet colorPallet)
             return GameColor::LIGHT_MAIN;
         case ColorPallet::Sub:
             return GameColor::LIGHT_SUB;
+        case ColorPallet::Glay:
+            return GameColor::LIGHT_GRAY;
         case ColorPallet::Green:
             return GameColor::LIGHT_GREEN;
         case ColorPallet::Red:
@@ -73,6 +75,8 @@ Color SettingManager::GetColor(ColorPallet colorPallet)
             return GameColor::DARK_MAIN;
         case ColorPallet::Sub:
             return GameColor::DARK_SUB;
+        case ColorPallet::Glay:
+            return GameColor::DARK_GRAY;
         case ColorPallet::Green:
             return GameColor::DARK_GREEN;
         case ColorPallet::Red:

@@ -20,6 +20,7 @@ enum class ColorPallet
 {
     Main,
     Sub,
+    Glay,
     Green,
     Red,
     Blue,
@@ -41,18 +42,18 @@ public:
     static void Update();
     static void Unload();
 
-    static void SetTheme(Theme);
+    static void SetTheme(Theme theme);
     static Theme GetTheme();
-    static Color GetColor(ColorPallet);
+    static Color GetColor(ColorPallet colorPallet);
 
     static WindowMode GetWindowMode();
-    static void SetWindowMode(WindowMode);
+    static void SetWindowMode(WindowMode windowMode);
 
     static int GetMonitorID();
-    static void SetMonitorID(int);
+    static void SetMonitorID(int monitorID);
 
     static int GetMaxFPS();
-    static void SetMaxFPS(int);
+    static void SetMaxFPS(int targetFPS);
 
     static void UpdateWindow();
     static void UpdateMaxFPS();

@@ -11,7 +11,7 @@ protected:
 
 public:
     virtual void Enable() {}
-    virtual void Update();
+    virtual void Update(Vector2 size);
     virtual void Disable() {}
     virtual ~Scene();
 };
@@ -24,8 +24,18 @@ public:
 
 class TitleScene : public Scene
 {
+public:
+    TitleScene();
+};
+
+class MenuScene : public Scene
+{
+public:
+    MenuScene();
 };
 
 class GameScene : public Scene
 {
+public:
+    GameScene();
 };
