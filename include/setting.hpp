@@ -8,12 +8,14 @@ enum class WindowMode
 {
     Windowed = 1,
     Borderless = 2,
+    Count = 3,
 };
 
 enum class Theme
 {
     Light = 1,
     Dark = 2,
+    Count = 3,
 };
 
 enum class ColorPallet
@@ -54,6 +56,14 @@ public:
 
     static int GetMaxFPS();
     static void SetMaxFPS(int targetFPS);
+
+    static int GetGeneralSensitivity();
+    static void SetGeneralSensitivity(int sensitivity);
+    static float GetGeneralSensitivityFloat();
+
+    static int GetGeneralThreshold();
+    static void SetGeneralThreshold(int threshold);
+    static float GetGeneralThresholdFloat();
 
     static void UpdateWindow();
     static void UpdateMaxFPS();

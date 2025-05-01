@@ -16,6 +16,10 @@ namespace DisplayText
     const std::string MONITOR_ID_DESCRIPTION = "Monitor ID. for multi-monitor setup.";
     const std::string MAX_FPS = "MaxFPS";
     const std::string MAX_FPS_DESCRIPTION = "Max Framerate.";
+    const std::string GENERAL_SENSITIVITY = "GeneralSensitivity";
+    const std::string GENERAL_SENSITIVITY_DESCRIPTION = "General Sensitivity for Mouse Cursor.";
+    const std::string GENERAL_THRESHOLD = "GeneralThreshold";
+    const std::string GENERAL_THRESHOLD_DESCRIPTION = "General Threshold for Gamepad Joysticks and Triggers.";
 
     const std::string GAME_TITLE = "Cubis";
     const std::string GAME_TITLE_WITH_VERSION = "Cubis [Ver 0.1.0]";
@@ -31,8 +35,7 @@ namespace DisplayText
     const std::string VS_MODE_BUTTON_TEXT = "VS Mode";
     const std::string RANKED_MATCH_BUTTON_TEXT = "Ranked Match";
     const std::string CUSTOM_MATCH_BUTTON_TEXT = "Custom Match";
-    const std::string PLAYER_JOIN_TEXT = "Press [Space] / [+] to Join";
-    const std::string PLAYER_QUIT_TEXT = "Press [Escape] / [-] to Quit";
+    const std::string PLAYER_JOIN_OR_QUIT_TEXT = "Press [Escape] / [+] to Join / Quit";
 }
 
 namespace DefaultSetting
@@ -42,6 +45,8 @@ namespace DefaultSetting
     const int DEFAULT_MONITOR_ID = 1;
     const Vector2 DEFAULT_WINDOW_SIZE = {1280, 720};
     const int DEFAULT_MAX_FPS = 60;
+    const int DEFAULT_GENERAL_SENSITIVITY = 10;
+    const int DEFAULT_GENERAL_THRESHOLD = 5;
 }
 
 namespace Constants

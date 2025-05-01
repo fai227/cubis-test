@@ -74,8 +74,7 @@ MenuScene::MenuScene()
     Button *rankedMatchButton = new Button({0.5f, 0.45f, 0.2f, 0.05f}, DisplayText::RANKED_MATCH_BUTTON_TEXT.c_str());
     Button *customMatchButton = new Button({0.5f, 0.55f, 0.2f, 0.05f}, DisplayText::CUSTOM_MATCH_BUTTON_TEXT.c_str());
 
-    Text *playerJoinText = new Text({0.85f, 0.78f, 0.3f, 0.05f}, DisplayText::PLAYER_JOIN_TEXT.c_str());
-    Text *playerQuitText = new Text({0.85f, 0.83f, 0.3f, 0.05f}, DisplayText::PLAYER_QUIT_TEXT.c_str());
+    Text *playerJoinOrQuitText = new Text({0.8f, 0.8f, 0.4f, 0.1f}, DisplayText::PLAYER_JOIN_OR_QUIT_TEXT.c_str());
 
     switchThemeButton->SetNavigation(onlineButton, nullptr, nullptr, nullptr);
 
@@ -125,8 +124,7 @@ MenuScene::MenuScene()
     uiElements.push_back(rankedMatchButton);
     uiElements.push_back(customMatchButton);
 
-    uiElements.push_back(playerJoinText);
-    uiElements.push_back(playerQuitText);
+    uiElements.push_back(playerJoinOrQuitText);
 }
 
 void MenuScene::Enable()

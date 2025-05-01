@@ -7,7 +7,7 @@
 
 #define CUSTOM_ID 1000
 
-enum class KeyboardAndMouse
+enum class CKeyboardMouse
 {
     KEY_NULL = 0, // Key: NULL, used for no key pressed
     // Alphanumeric keys
@@ -142,7 +142,7 @@ enum class KeyboardAndMouse
     MOUSE_CURSOR_RIGHT = CUSTOM_ID + 14,  // Mouse cursor right (scroll right)
 };
 
-enum class GamePad
+enum class CGamepad
 {
     UNKNOWN = 0,      // Unknown button, just for error checking
     LEFT_FACE_UP,     // Gamepad left DPAD up button
@@ -195,10 +195,15 @@ private:
     static Button *selectedButton;
 
     static std::function<void(int)> pauseCallback;
-    static std::function<void(KeyboardAndMouse)> keyboardAndMouseAnyButtonCallback;
-    static std::function<void(GamePad)> gamePadAnyButtonCallback;
+    static std::function<void(CKeyboardMouse)> keyboardMouseAnyButtonCallback;
+    static std::function<void(CGamepad)> gamePadAnyButtonCallback;
 
     static Vector2 previousMousePosition;
+
+    static bool isMouseCursorUpPressed;
+    static bool isMouseCursorDownPressed;
+    static bool isMouseCursorLeftPressed;
+    static bool isMouseCursorRightPressed;
 
     static std::array<bool, MAX_GAMEPADS> isGamepadLeftStickUpPressed;
     static std::array<bool, MAX_GAMEPADS> isGamepadLeftStickRightPressed;
@@ -213,9 +218,16 @@ private:
     static std::array<bool, MAX_GAMEPADS> isGamepadLeftTriggerPressed;
     static std::array<bool, MAX_GAMEPADS> isGamepadRightTriggerPressed;
 
+    static int GetCGamepadPressed(CGamepad key);
+
+    static void UpdateCInputs();
+    static void UpdateUINavigation();
+    static void UpdatePause();
+    static void UpdateAnyCKeyboardMouse();
+    static void UpdateAnyCGamepad();
+
 public:
-    static void
-    Init();
+    static void Init();
     static void Update();
     static void Unload();
 
@@ -227,13 +239,13 @@ public:
     static void SetPauseCallback(std::function<void(int)> callback);
     static void RemovePauseCallback();
 
-    static void SetKeyboardAndMouseAnyButtonCallback(std::function<void(KeyboardAndMouse)> callback);
-    static void RemoveKeyboardAndMouseAnyButtonCallback();
-    static void SetGamePadAnyButtonCallback(std::function<void(GamePad)> callback);
-    static void RemoveGamePadAnyButtonCallback();
+    static void SetAnyCKeyboardMouseCallback(std::function<void(CKeyboardMouse)> callback);
+    static void RemoveAnyCKeyboardMouseCallback();
+    static void SetAnyCGamepadCallback(std::function<void(CGamepad)> callback);
+    static void RemoveAnyCGamepadCallback();
 
-    static float IsKeyboardAndMousePressed(KeyboardAndMouse key, float sensitivity = 1.0f);
-    static float IsKeyboardAndMouseDown(KeyboardAndMouse key, float sensitivity = 1.0f);
-    static float IsGamePadPressed(GamePad key, int gamepad, float threshold = 0.0f);
-    static float IsGamePadDown(GamePad key, int gamepad, float threshold = 0.0f);
+    static float IsCKeyboardMousePressed(CKeyboardMouse key, float sensitivity = 1.0f);
+    static float IsCKeyboardMouseDown(CKeyboardMouse key, float sensitivity = 1.0f);
+    static float IsCGamepadPressed(CGamepad key, int gamepad, float threshold = 0.0f);
+    static float IsCGamepadDown(CGamepad key, int gamepad, float threshold = 0.0f);
 };

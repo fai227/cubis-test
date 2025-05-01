@@ -33,8 +33,18 @@ void SettingManager::SetTheme(Theme theme)
 Theme SettingManager::GetTheme()
 {
     int theme = rini_get_config_value(config, DisplayText::THEME.c_str());
-    if (theme == 0)
+
+    if (theme < 0 || theme >= static_cast<int>(Theme::Count))
+    {
+        TraceLog(LOG_WARNING, "SettingManager::GetTheme: Invalid theme: %d", theme);
         return DefaultSetting::DEFAULT_THEME;
+    }
+
+    if (theme == 0)
+    {
+        return DefaultSetting::DEFAULT_THEME;
+    }
+
     return static_cast<Theme>(theme);
 }
 
@@ -101,8 +111,18 @@ Color SettingManager::GetColor(ColorPallet colorPallet)
 WindowMode SettingManager::GetWindowMode()
 {
     int windowMode = rini_get_config_value(config, DisplayText::WINDOW_MODE.c_str());
-    if (windowMode == 0)
+
+    if (windowMode < 0 || windowMode >= static_cast<int>(WindowMode::Count))
+    {
+        TraceLog(LOG_WARNING, "SettingManager::GetWindowMode: Invalid windowMode: %d", windowMode);
         return DefaultSetting::DEFAULT_WINDOW_MODE;
+    }
+
+    if (windowMode == 0)
+    {
+        return DefaultSetting::DEFAULT_WINDOW_MODE;
+    }
+
     return static_cast<WindowMode>(windowMode);
 }
 
@@ -117,8 +137,18 @@ void SettingManager::SetWindowMode(WindowMode windowMode)
 int SettingManager::GetMonitorID()
 {
     int monitorID = rini_get_config_value(config, DisplayText::MONITOR_ID.c_str());
-    if (monitorID == 0)
+
+    if (monitorID < 0 || monitorID > GetMonitorCount())
+    {
+        TraceLog(LOG_WARNING, "SettingManager::GetMonitorID: Invalid monitorID: %d", monitorID);
         return DefaultSetting::DEFAULT_MONITOR_ID;
+    }
+
+    if (monitorID == 0)
+    {
+        return DefaultSetting::DEFAULT_MONITOR_ID;
+    }
+
     return monitorID;
 }
 
@@ -133,8 +163,18 @@ void SettingManager::SetMonitorID(int monitorID)
 int SettingManager::GetMaxFPS()
 {
     int targetFPS = rini_get_config_value(config, DisplayText::MAX_FPS.c_str());
-    if (targetFPS == 0)
+
+    if (targetFPS < 0)
+    {
+        TraceLog(LOG_WARNING, "SettingManager::GetMaxFPS: Invalid targetFPS: %d", targetFPS);
         return DefaultSetting::DEFAULT_MAX_FPS;
+    }
+
+    if (targetFPS == 0)
+    {
+        return DefaultSetting::DEFAULT_MAX_FPS;
+    }
+
     return targetFPS;
 }
 
@@ -144,6 +184,76 @@ void SettingManager::SetMaxFPS(int targetFPS)
     SaveConfig();
 
     UpdateMaxFPS();
+}
+
+int SettingManager::GetGeneralSensitivity()
+{
+    int sensitivity = rini_get_config_value(config, DisplayText::GENERAL_SENSITIVITY.c_str());
+
+    if (sensitivity < 0 || sensitivity > 20)
+    {
+        TraceLog(LOG_WARNING, "SettingManager::GetGeneralSensitivity: Invalid sensitivity: %d", sensitivity);
+        return DefaultSetting::DEFAULT_GENERAL_SENSITIVITY;
+    }
+
+    if (sensitivity == 0)
+    {
+        return DefaultSetting::DEFAULT_GENERAL_SENSITIVITY;
+    }
+
+    return sensitivity;
+}
+
+void SettingManager::SetGeneralSensitivity(int sensitivity)
+{
+    rini_set_config_value(&config, DisplayText::GENERAL_SENSITIVITY.c_str(), sensitivity, DisplayText::GENERAL_SENSITIVITY_DESCRIPTION.c_str());
+    SaveConfig();
+}
+
+float SettingManager::GetGeneralSensitivityFloat()
+{
+    int sensitivity = SettingManager::GetGeneralSensitivity();
+
+    // (int)1~10 -> (float)0.1~1.0
+    if (sensitivity <= 10)
+    {
+        return static_cast<float>(sensitivity) / 10.0f;
+    }
+
+    // (int)11~20 -> (flaot)1~100
+    return (static_cast<float>(sensitivity) - 10.0f) * 10.0f;
+}
+
+int SettingManager::GetGeneralThreshold()
+{
+    int threshold = rini_get_config_value(config, DisplayText::GENERAL_THRESHOLD.c_str());
+
+    if (threshold < 0 || threshold > 10)
+    {
+        TraceLog(LOG_WARNING, "SettingManager::GetGeneralThreshold: Invalid threshold: %d", threshold);
+        return DefaultSetting::DEFAULT_GENERAL_THRESHOLD;
+    }
+
+    if (threshold == 0)
+    {
+        return DefaultSetting::DEFAULT_GENERAL_THRESHOLD;
+    }
+
+    return threshold;
+}
+
+void SettingManager::SetGeneralThreshold(int threshold)
+{
+    rini_set_config_value(&config, DisplayText::GENERAL_THRESHOLD.c_str(), threshold, DisplayText::GENERAL_THRESHOLD_DESCRIPTION.c_str());
+    SaveConfig();
+}
+
+float SettingManager::GetGeneralThresholdFloat()
+{
+    int threshold = SettingManager::GetGeneralThreshold();
+
+    // (int)1~10 -> (float)0.0~0.9
+    return static_cast<float>(threshold) / 10.0f - 0.1f;
 }
 
 void SettingManager::UpdateWindow()

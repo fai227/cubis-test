@@ -13,10 +13,10 @@ void DebugManager::Update()
     // FPS
     DrawFPS(10, 10);
 
-    bool isCursorDownPressed = InputManager::IsKeyboardAndMousePressed(KeyboardAndMouse::MOUSE_CURSOR_DOWN);
-    bool isCursorUpPressed = InputManager::IsKeyboardAndMousePressed(KeyboardAndMouse::MOUSE_CURSOR_UP);
-    bool isCursorLeftPressed = InputManager::IsKeyboardAndMousePressed(KeyboardAndMouse::MOUSE_CURSOR_LEFT);
-    bool isCursorRightPressed = InputManager::IsKeyboardAndMousePressed(KeyboardAndMouse::MOUSE_CURSOR_RIGHT);
+    bool isCursorDownPressed = InputManager::IsCKeyboardMousePressed(CKeyboardMouse::MOUSE_CURSOR_DOWN);
+    bool isCursorUpPressed = InputManager::IsCKeyboardMousePressed(CKeyboardMouse::MOUSE_CURSOR_UP);
+    bool isCursorLeftPressed = InputManager::IsCKeyboardMousePressed(CKeyboardMouse::MOUSE_CURSOR_LEFT);
+    bool isCursorRightPressed = InputManager::IsCKeyboardMousePressed(CKeyboardMouse::MOUSE_CURSOR_RIGHT);
 
     // 結果を表示
     DrawText(TextFormat("Cursor Down: %d", isCursorDownPressed), 10, 30, 20, WHITE);
