@@ -6,6 +6,8 @@
 #include "modal.hpp"
 #include "system.hpp"
 
+#include "debug.hpp"
+
 bool RenderManager::isTransitioning;
 float RenderManager::transitionTimeLeft;
 Scene *RenderManager::currentScene;
@@ -32,6 +34,8 @@ Rectangle RenderManager::CalculateScreenBounds()
 
 void RenderManager::Init()
 {
+    DebugManager::Init();
+
     // 初期設定
     isTransitioning = false;
     currentScene = new BlankScene();
@@ -99,7 +103,7 @@ void RenderManager::Update()
     */
 
     // デバッグ要素描画
-    DrawFPS(10, 10);
+    DebugManager::Update();
 
     // 描画終了処理
     EndDrawing();
@@ -122,6 +126,7 @@ void RenderManager::Update()
 
 void RenderManager::Unload()
 {
+    DebugManager::Unload();
 }
 
 void RenderManager::TransitToNextScene(Scene *scene)

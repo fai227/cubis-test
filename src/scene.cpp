@@ -4,6 +4,13 @@
 #include "setting.hpp"
 #include "raylib.h"
 #include "constants.hpp"
+#include "render.hpp"
+#include "input.hpp"
+
+Scene::Scene()
+{
+    TraceLog(LOG_INFO, "Scene created.");
+}
 
 void Scene::Update(Vector2 size)
 {
@@ -20,6 +27,8 @@ Scene::~Scene()
     {
         delete element;
     }
+
+    TraceLog(LOG_INFO, "Scene destroyed.");
 }
 
 BlankScene::BlankScene()
@@ -31,8 +40,21 @@ TitleScene::TitleScene()
     Text *titleText = new Text({0.5f, 0.5f, 0.5f, 0.33f}, DisplayText::GAME_TITLE.c_str());
     Button *startButton = new Button({0.5f, 0.8f, 0.33f, 0.05f}, DisplayText::START_BUTTON_TEXT.c_str());
 
+    startButton->OnClick = []()
+    {
+        InputManager::SetNavigationEnabled(false);
+        InputManager::RemoveSelectedItem();
+        RenderManager::TransitToNextScene(new MenuScene());
+    };
+
     uiElements.push_back(titleText);
     uiElements.push_back(startButton);
+}
+
+void TitleScene::Enable()
+{
+    InputManager::SetNavigationEnabled(true);
+    InputManager::SetSelectedItem(static_cast<Button *>(uiElements[1]));
 }
 
 MenuScene::MenuScene()
@@ -55,9 +77,11 @@ MenuScene::MenuScene()
     Text *playerJoinText = new Text({0.85f, 0.78f, 0.3f, 0.05f}, DisplayText::PLAYER_JOIN_TEXT.c_str());
     Text *playerQuitText = new Text({0.85f, 0.83f, 0.3f, 0.05f}, DisplayText::PLAYER_QUIT_TEXT.c_str());
 
-    soloButton->SetNavigation(nullptr, localButton, nullptr, nullptr);
-    localButton->SetNavigation(soloButton, onlineButton, nullptr, nullptr);
-    onlineButton->SetNavigation(localButton, nullptr, nullptr, nullptr);
+    switchThemeButton->SetNavigation(onlineButton, nullptr, nullptr, nullptr);
+
+    soloButton->SetNavigation(nullptr, localButton, switchThemeButton, nullptr);
+    localButton->SetNavigation(soloButton, onlineButton, switchThemeButton, nullptr);
+    onlineButton->SetNavigation(localButton, switchThemeButton, switchThemeButton, nullptr);
 
     fourtyLinesButton->SetNavigation(nullptr, scoreAttackButton, nullptr, nullptr);
     scoreAttackButton->SetNavigation(fourtyLinesButton, vsModeButton, nullptr, nullptr);
@@ -72,6 +96,19 @@ MenuScene::MenuScene()
 
     rankedMatchButton->isVisible = false;
     customMatchButton->isVisible = false;
+
+    switchThemeButton->OnClick = []()
+    {
+        Theme currentTheme = SettingManager::GetTheme();
+        if (currentTheme == Theme::Light)
+        {
+            SettingManager::SetTheme(Theme::Dark);
+        }
+        else
+        {
+            SettingManager::SetTheme(Theme::Light);
+        }
+    };
 
     uiElements.push_back(titleText);
 
@@ -90,4 +127,10 @@ MenuScene::MenuScene()
 
     uiElements.push_back(playerJoinText);
     uiElements.push_back(playerQuitText);
+}
+
+void MenuScene::Enable()
+{
+    InputManager::SetNavigationEnabled(true);
+    InputManager::SetSelectedItem(static_cast<Button *>(uiElements[2]));
 }

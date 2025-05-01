@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 #include <string>
+#include <functional>
 
 class UIElement
 {
@@ -33,10 +34,12 @@ public:
     bool isEnabled;
     bool isSelected;
 
-    Button *up;
-    Button *down;
-    Button *left;
-    Button *right;
+    std::function<void()> OnClick = nullptr;
+
+    Button *up = nullptr;
+    Button *down = nullptr;
+    Button *left = nullptr;
+    Button *right = nullptr;
 
     Button(Rectangle _bounds, std::string _label);
     void Draw(Vector2 size) override;

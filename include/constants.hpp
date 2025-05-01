@@ -9,9 +9,13 @@ namespace DisplayText
     const std::string CONFIG_FILE_NAME = "config.ini";
 
     const std::string THEME = "Theme";
+    const std::string THEME_DESCRIPTION = "Theme of the Game (1: Light, 2: Dark)";
     const std::string WINDOW_MODE = "WindowMode";
+    const std::string WINDOW_MODE_DESCRIPTION = "Window Mode. (1: Windowed, 2: Borderless)";
     const std::string MONITOR_ID = "MonitorID";
+    const std::string MONITOR_ID_DESCRIPTION = "Monitor ID. for multi-monitor setup.";
     const std::string MAX_FPS = "MaxFPS";
+    const std::string MAX_FPS_DESCRIPTION = "Max Framerate.";
 
     const std::string GAME_TITLE = "Cubis";
     const std::string GAME_TITLE_WITH_VERSION = "Cubis [Ver 0.1.0]";
@@ -37,7 +41,7 @@ namespace DefaultSetting
     const WindowMode DEFAULT_WINDOW_MODE = WindowMode::Windowed;
     const int DEFAULT_MONITOR_ID = 1;
     const Vector2 DEFAULT_WINDOW_SIZE = {1280, 720};
-    const int DEFAULT_MAX_FPS = 60000;
+    const int DEFAULT_MAX_FPS = 60;
 }
 
 namespace Constants
@@ -47,7 +51,7 @@ namespace Constants
 
     const float ASPECT_RATIO = 16.0f / 9.0f;
 
-    const float MAX_TEXT_SIZE_IN_BOUNDS = 0.9f;
+    const float MAX_TEXT_SIZE_IN_BOUNDS = 0.75f;
 
     const float TRANSITION_DURATION = 1.0f;
 }

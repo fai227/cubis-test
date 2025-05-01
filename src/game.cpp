@@ -1,4 +1,6 @@
 #define RINI_IMPLEMENTATION
+// #define RRES_RAYLIB_IMPLEMENTATION
+// #define RRES_IMPLEMENTATION
 
 #include "raylib.h"
 #include "game.hpp"
@@ -13,9 +15,9 @@ void Game::Init()
     SystemManager::Init();
     SettingManager::Init();
 
-    AudioManager::Init();
     InputManager::Init();
 
+    AudioManager::Init();
     RenderManager::Init();
 }
 
@@ -26,9 +28,9 @@ void Game::Mainloop()
         SystemManager::Update();
         SettingManager::Update();
 
-        AudioManager::Update();
         InputManager::Update();
 
+        AudioManager::Update();
         RenderManager::Update();
     }
 }
@@ -38,9 +40,9 @@ void Game::Unload()
     SystemManager::Unload();
     SettingManager::Unload();
 
-    AudioManager::Unload();
     InputManager::Unload();
 
+    AudioManager::Unload();
     RenderManager::Unload();
 }
 

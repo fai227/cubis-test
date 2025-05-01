@@ -164,6 +164,7 @@ if (downloadRaylib) then
     
         includedirs { "../src" }
         includedirs { "../include" }
+        includedirs { "../lib" }
 
         links {"raylib"}
 

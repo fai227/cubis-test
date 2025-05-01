@@ -10,6 +10,7 @@ protected:
     std::vector<UIElement *> uiElements;
 
 public:
+    Scene();
     virtual void Enable() {}
     virtual void Update(Vector2 size);
     virtual void Disable() {}
@@ -26,12 +27,14 @@ class TitleScene : public Scene
 {
 public:
     TitleScene();
+    void Enable() override;
 };
 
 class MenuScene : public Scene
 {
 public:
     MenuScene();
+    void Enable() override;
 };
 
 class GameScene : public Scene

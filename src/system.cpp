@@ -5,7 +5,7 @@
 
 int SystemManager::previousWidth = 0;
 int SystemManager::previousHeight = 0;
-std::function<void(int, int)> SystemManager::WindowResizeCallback = nullptr;
+std::function<void(int, int)> SystemManager::windowResizeCallback = nullptr;
 
 void SystemManager::Init()
 {
@@ -13,6 +13,9 @@ void SystemManager::Init()
     InitWindow(DefaultSetting::DEFAULT_WINDOW_SIZE.x, DefaultSetting::DEFAULT_WINDOW_SIZE.y, DisplayText::GAME_TITLE_WITH_VERSION.c_str());
     SetWindowMinSize(Constants::MANIMUM_WINDOW_WIDTH, Constants::MANIMUM_WINDOW_HEIGHT);
     SetExitKey(0);
+
+    // マウスカーソル非表示
+    DisableCursor();
 }
 
 void SystemManager::Update()
@@ -22,9 +25,9 @@ void SystemManager::Update()
     {
         previousWidth = GetScreenWidth();
         previousHeight = GetScreenHeight();
-        if (WindowResizeCallback)
+        if (windowResizeCallback)
         {
-            WindowResizeCallback(previousWidth, previousHeight);
+            windowResizeCallback(previousWidth, previousHeight);
         }
     }
 }
@@ -36,5 +39,5 @@ void SystemManager::Unload()
 
 void SystemManager::SetWindowResizeCallback(std::function<void(int, int)> callback)
 {
-    WindowResizeCallback = callback;
+    windowResizeCallback = callback;
 }

@@ -7,7 +7,7 @@ class SystemManager
 private:
     static int previousWidth;
     static int previousHeight;
-    static std::function<void(int width, int height)> WindowResizeCallback;
+    static std::function<void(int width, int height)> windowResizeCallback;
 
 public:
     static void Init();

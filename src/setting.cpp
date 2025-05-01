@@ -26,7 +26,7 @@ void SettingManager::Unload()
 
 void SettingManager::SetTheme(Theme theme)
 {
-    rini_set_config_value(&config, DisplayText::THEME.c_str(), static_cast<int>(theme), NULL);
+    rini_set_config_value(&config, DisplayText::THEME.c_str(), static_cast<int>(theme), DisplayText::THEME_DESCRIPTION.c_str());
     SaveConfig();
 }
 
@@ -94,6 +94,7 @@ Color SettingManager::GetColor(ColorPallet colorPallet)
         }
     }
 
+    TraceLog(LOG_WARNING, "SettingManager::GetColor: Invalid colorPallet: %d", static_cast<int>(colorPallet));
     return BLANK;
 }
 
@@ -107,7 +108,7 @@ WindowMode SettingManager::GetWindowMode()
 
 void SettingManager::SetWindowMode(WindowMode windowMode)
 {
-    rini_set_config_value(&config, DisplayText::WINDOW_MODE.c_str(), static_cast<int>(windowMode), NULL);
+    rini_set_config_value(&config, DisplayText::WINDOW_MODE.c_str(), static_cast<int>(windowMode), DisplayText::WINDOW_MODE_DESCRIPTION.c_str());
     SaveConfig();
 
     UpdateWindow();
@@ -123,7 +124,7 @@ int SettingManager::GetMonitorID()
 
 void SettingManager::SetMonitorID(int monitorID)
 {
-    rini_set_config_value(&config, DisplayText::MONITOR_ID.c_str(), monitorID, NULL);
+    rini_set_config_value(&config, DisplayText::MONITOR_ID.c_str(), monitorID, DisplayText::MONITOR_ID_DESCRIPTION.c_str());
     SaveConfig();
 
     UpdateWindow();
@@ -139,7 +140,7 @@ int SettingManager::GetMaxFPS()
 
 void SettingManager::SetMaxFPS(int targetFPS)
 {
-    rini_set_config_value(&config, DisplayText::MAX_FPS.c_str(), targetFPS, NULL);
+    rini_set_config_value(&config, DisplayText::MAX_FPS.c_str(), targetFPS, DisplayText::MAX_FPS_DESCRIPTION.c_str());
     SaveConfig();
 
     UpdateMaxFPS();
