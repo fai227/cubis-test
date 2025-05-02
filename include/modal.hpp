@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ui.hpp"
 #include <string>
 #include <list>
 #include <functional>
@@ -12,11 +13,16 @@ private:
     std::string rightButtonText;
     std::function<void()> leftButtonCallback;
     std::function<void()> rightButtonCallback;
-    bool defaultLeftSelected;
 
 public:
     Modal(std::string message, std::string leftButtonText, std::string rightButtonText, std::function<void()> leftButtonCallback, std::function<void()> rightButtonCallback, bool defaultLeftSelected);
     void Draw();
+
+    Text *messageText;
+    Button *leftButton;
+    Button *rightButton;
+
+    bool defaultLeftSelected;
 };
 
 class ModalManager

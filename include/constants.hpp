@@ -31,8 +31,6 @@ namespace UIElementDisplayText
 {
     const std::string CUBIS = "Cubis";
     const std::string PRESS_RETURN_OR_A_TO_START = "Press [Return] / [A] to Start";
-    const std::string LOCAL = "Local";
-    const std::string ONLINE = "Online";
     const std::string EXIT_GAME = "Exit Game";
     const std::string THEME = "Theme";
     const std::string SETTING = "Setting";

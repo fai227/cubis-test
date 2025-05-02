@@ -63,59 +63,53 @@ void TitleScene::Enable()
 MenuScene::MenuScene()
 {
     Text *text1 = new Text({0.250, 0.189, 0.500, 0.272}, UIElementDisplayText::CUBIS.c_str());
-    Button *button1 = new Button({0.244, 0.339, 0.176, 0.067}, UIElementDisplayText::LOCAL.c_str());
-    Button *button2 = new Button({0.244, 0.424, 0.176, 0.067}, UIElementDisplayText::ONLINE.c_str());
-    Button *button3 = new Button({0.244, 0.796, 0.176, 0.067}, UIElementDisplayText::EXIT_GAME.c_str());
-    Button *button4 = new Button({0.244, 0.624, 0.176, 0.067}, UIElementDisplayText::THEME.c_str());
-    Button *button5 = new Button({0.245, 0.710, 0.176, 0.067}, UIElementDisplayText::SETTING.c_str());
-    Button *button6 = new Button({0.244, 0.538, 0.176, 0.067}, UIElementDisplayText::LEADERBOARD.c_str());
+    Button *button1 = new Button({0.248, 0.673, 0.176, 0.067}, UIElementDisplayText::EXIT_GAME.c_str());
+    Button *button2 = new Button({0.248, 0.466, 0.176, 0.067}, UIElementDisplayText::THEME.c_str());
+    Button *button3 = new Button({0.248, 0.569, 0.176, 0.067}, UIElementDisplayText::SETTING.c_str());
+    Button *button4 = new Button({0.248, 0.363, 0.176, 0.067}, UIElementDisplayText::LEADERBOARD.c_str());
     Text *text2 = new Text({0.548, 0.371, 0.262, 0.076}, UIElementDisplayText::BATTLE_MODE.c_str());
-    Button *button7 = new Button({0.899, 0.371, 0.038, 0.067}, UIElementDisplayText::NO_TEXT_1.c_str());
+    Button *button5 = new Button({0.899, 0.371, 0.038, 0.067}, UIElementDisplayText::NO_TEXT_1.c_str());
     Text *text3 = new Text({0.798, 0.371, 0.163, 0.058}, UIElementDisplayText::CHANGABLE_TEXT.c_str());
-    Button *button8 = new Button({0.698, 0.371, 0.038, 0.067}, UIElementDisplayText::NO_TEXT_2.c_str());
+    Button *button6 = new Button({0.698, 0.371, 0.038, 0.067}, UIElementDisplayText::NO_TEXT_2.c_str());
     Text *text4 = new Text({0.548, 0.465, 0.262, 0.076}, UIElementDisplayText::PLAYER_COUNT.c_str());
-    Button *button9 = new Button({0.899, 0.466, 0.038, 0.067}, UIElementDisplayText::NO_TEXT_1.c_str());
+    Button *button7 = new Button({0.899, 0.466, 0.038, 0.067}, UIElementDisplayText::NO_TEXT_1.c_str());
     Text *text5 = new Text({0.798, 0.466, 0.163, 0.058}, UIElementDisplayText::CHANGABLE_TEXT.c_str());
-    Button *button10 = new Button({0.698, 0.466, 0.038, 0.067}, UIElementDisplayText::NO_TEXT_2.c_str());
-    Button *button11 = new Button({0.698, 0.639, 0.319, 0.135}, UIElementDisplayText::START_GAME.c_str());
+    Button *button8 = new Button({0.698, 0.466, 0.038, 0.067}, UIElementDisplayText::NO_TEXT_2.c_str());
+    Button *button9 = new Button({0.698, 0.639, 0.319, 0.135}, UIElementDisplayText::START_GAME.c_str());
     Text *text6 = new Text({0.824, 0.820, 0.351, 0.058}, UIElementDisplayText::PRESS_RETURN_OR_PLUS_TO_JOIN_QUIT.c_str());
 
-    button1->SetNavigation(nullptr, button2, nullptr, button8);
-    button2->SetNavigation(button1, button6, nullptr, button10);
-    button3->SetNavigation(button5, nullptr, nullptr, button11);
-    button4->SetNavigation(button6, button5, nullptr, button11);
-    button5->SetNavigation(button4, button3, nullptr, button11);
-    button6->SetNavigation(button2, button4, nullptr, button10);
-    button7->SetNavigation(nullptr, button9, button8, nullptr);
-    button8->SetNavigation(nullptr, button10, button1, button7);
-    button9->SetNavigation(button7, nullptr, button10, nullptr);
-    button10->SetNavigation(button8, button11, button2, button9);
-    button11->SetNavigation(button10, nullptr, button4, button9);
+    button1->SetNavigation(button3, nullptr, nullptr, button9);
+    button2->SetNavigation(button4, button3, nullptr, button8);
+    button3->SetNavigation(button2, button1, nullptr, button9);
+    button4->SetNavigation(nullptr, button2, nullptr, button6);
+    button5->SetNavigation(nullptr, button7, button6, nullptr);
+    button6->SetNavigation(nullptr, button8, button4, button5);
+    button7->SetNavigation(button5, nullptr, button8, nullptr);
+    button8->SetNavigation(button6, button9, button2, button7);
+    button9->SetNavigation(button8, nullptr, button1, button7);
 
     uiElements.push_back(text1);
     uiElements.push_back(button1);
     uiElements.push_back(button2);
     uiElements.push_back(button3);
     uiElements.push_back(button4);
-    uiElements.push_back(button5);
-    uiElements.push_back(button6);
     uiElements.push_back(text2);
-    uiElements.push_back(button7);
+    uiElements.push_back(button5);
     uiElements.push_back(text3);
-    uiElements.push_back(button8);
+    uiElements.push_back(button6);
     uiElements.push_back(text4);
-    uiElements.push_back(button9);
+    uiElements.push_back(button7);
     uiElements.push_back(text5);
-    uiElements.push_back(button10);
-    uiElements.push_back(button11);
+    uiElements.push_back(button8);
+    uiElements.push_back(button9);
     uiElements.push_back(text6);
 
-    button3->OnClick = []()
+    button1->OnClick = []()
     {
         Game::RequestExit();
     };
 
-    button4->OnClick = []()
+    button2->OnClick = []()
     {
         Theme currentTheme = SettingManager::GetTheme();
         if (currentTheme == Theme::Light)
@@ -128,12 +122,49 @@ MenuScene::MenuScene()
         }
     };
 
-    button5->OnClick = []()
+    button3->OnClick = []()
     {
         InputManager::SetNavigationEnabled(false);
         InputManager::RemoveSelectedItem();
         RenderManager::TransitToNextScene(new OptionScene());
     };
+
+    button4->OnClick = []()
+    {
+        InputManager::SetNavigationEnabled(false);
+        InputManager::RemoveSelectedItem();
+        RenderManager::TransitToNextScene(new LeaderboardScene());
+    };
+}
+
+void MenuScene::Enable()
+{
+    InputManager::SetNavigationEnabled(true);
+    InputManager::SetSelectedItem(static_cast<Button *>(uiElements[4]));
+}
+
+LeaderboardScene::LeaderboardScene()
+{
+    Text *text1 = new Text({0.500, 0.081, 1.000, 0.162}, UIElementDisplayText::LEADERBOARD.c_str());
+    Button *button1 = new Button({0.166, 0.947, 0.290, 0.076}, UIElementDisplayText::BACK_TO_MENU.c_str());
+
+    button1->SetNavigation(nullptr, nullptr, nullptr, nullptr);
+
+    uiElements.push_back(text1);
+    uiElements.push_back(button1);
+
+    button1->OnClick = []()
+    {
+        InputManager::SetNavigationEnabled(false);
+        InputManager::RemoveSelectedItem();
+        RenderManager::TransitToNextScene(new MenuScene());
+    };
+}
+
+void LeaderboardScene::Enable()
+{
+    InputManager::SetNavigationEnabled(true);
+    InputManager::SetSelectedItem(static_cast<Button *>(uiElements[1]));
 }
 
 OptionScene::OptionScene()
@@ -191,7 +222,7 @@ OptionScene::OptionScene()
     Button *button33 = new Button({0.880, 0.438, 0.201, 0.038}, UIElementDisplayText::BUTTON_UP.c_str());
     Button *button34 = new Button({0.880, 0.346, 0.201, 0.038}, UIElementDisplayText::LEFT_JOYSTICK_DOWN.c_str());
     Button *button35 = new Button({0.880, 0.209, 0.201, 0.038}, UIElementDisplayText::LEFT_JOYSTICK_RIGHT.c_str());
-    Text *text19 = new Text({0.669, 0.081, 0.663, 0.094}, UIElementDisplayText::CONTROL.c_str());
+    Text *text19 = new Text({0.670, 0.081, 0.659, 0.094}, UIElementDisplayText::CONTROL.c_str());
     Text *text20 = new Text({0.166, 0.251, 0.330, 0.094}, UIElementDisplayText::GENERAL.c_str());
     Text *text21 = new Text({0.095, 0.362, 0.167, 0.045}, UIElementDisplayText::WINDOW_MODE.c_str());
     Text *text22 = new Text({0.249, 0.363, 0.086, 0.045}, UIElementDisplayText::CHANGABLE_TEXT.c_str());
@@ -209,11 +240,11 @@ OptionScene::OptionScene()
     Text *text28 = new Text({0.249, 0.595, 0.086, 0.045}, UIElementDisplayText::CHANGABLE_TEXT.c_str());
     Button *button42 = new Button({0.192, 0.595, 0.028, 0.049}, UIElementDisplayText::NO_TEXT_2.c_str());
     Button *button43 = new Button({0.306, 0.595, 0.028, 0.049}, UIElementDisplayText::NO_TEXT_1.c_str());
-    Text *text29 = new Text({0.095, 0.826, 0.167, 0.045}, UIElementDisplayText::CONTROLLER_THRESHOLD.c_str());
+    Text *text29 = new Text({0.095, 0.826, 0.167, 0.045}, UIElementDisplayText::CHANGABLE_TEXT.c_str());
     Text *text30 = new Text({0.249, 0.826, 0.086, 0.045}, UIElementDisplayText::CHANGABLE_TEXT.c_str());
     Button *button44 = new Button({0.192, 0.826, 0.028, 0.049}, UIElementDisplayText::NO_TEXT_2.c_str());
     Button *button45 = new Button({0.306, 0.826, 0.028, 0.049}, UIElementDisplayText::NO_TEXT_1.c_str());
-    Text *text31 = new Text({0.095, 0.671, 0.167, 0.045}, UIElementDisplayText::CHANGABLE_TEXT.c_str());
+    Text *text31 = new Text({0.095, 0.671, 0.167, 0.045}, UIElementDisplayText::CONTROLLER_THRESHOLD.c_str());
     Text *text32 = new Text({0.249, 0.672, 0.086, 0.045}, UIElementDisplayText::CHANGABLE_TEXT.c_str());
     Button *button46 = new Button({0.192, 0.672, 0.028, 0.049}, UIElementDisplayText::NO_TEXT_2.c_str());
     Button *button47 = new Button({0.306, 0.672, 0.028, 0.049}, UIElementDisplayText::NO_TEXT_1.c_str());
@@ -368,10 +399,4 @@ void OptionScene::Enable()
 {
     InputManager::SetNavigationEnabled(true);
     InputManager::SetSelectedItem(static_cast<Button *>(uiElements[0]));
-}
-
-void MenuScene::Enable()
-{
-    InputManager::SetNavigationEnabled(true);
-    InputManager::SetSelectedItem(static_cast<Button *>(uiElements[1]));
 }
