@@ -4,25 +4,18 @@
 #include <string>
 #include <list>
 #include <functional>
+#include "raylib.h"
 
 class Modal
 {
-private:
-    std::string message;
-    std::string leftButtonText;
-    std::string rightButtonText;
-    std::function<void()> leftButtonCallback;
-    std::function<void()> rightButtonCallback;
-
 public:
-    Modal(std::string message, std::string leftButtonText, std::string rightButtonText, std::function<void()> leftButtonCallback, std::function<void()> rightButtonCallback, bool defaultLeftSelected);
-    void Draw();
+    Modal(std::string message, std::string buttonText, std::function<void()> buttonCallback);
+    Modal(std::string message, std::string leftButtonText, std::string rightButtonText, std::function<void()> leftButtonCallback, std::function<void()> rightButtonCallback);
+    void Draw(Vector2 size);
 
     Text *messageText;
     Button *leftButton;
     Button *rightButton;
-
-    bool defaultLeftSelected;
 };
 
 class ModalManager

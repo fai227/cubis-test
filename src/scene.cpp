@@ -7,6 +7,7 @@
 #include "render.hpp"
 #include "input.hpp"
 #include "game.hpp"
+#include "modal.hpp"
 
 Scene::Scene()
 {
@@ -104,9 +105,17 @@ MenuScene::MenuScene()
     uiElements.push_back(button9);
     uiElements.push_back(text6);
 
-    button1->OnClick = []()
+    button1->OnClick = [button1]()
     {
-        Game::RequestExit();
+        Modal *modal = new Modal("Are you sure to exit game?", "No", "Yes", [button1]()
+                                 {
+            InputManager::SetNavigationEnabled(true);
+            InputManager::SetSelectedItem(button1);
+            ModalManager::DequeModal(); }, []()
+                                 {
+        InputManager::SetNavigationEnabled(false);
+        Game::RequestExit(); });
+        ModalManager::EnqueueModal(modal);
     };
 
     button2->OnClick = []()

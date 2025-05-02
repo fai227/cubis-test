@@ -14,6 +14,7 @@ Scene *RenderManager::currentScene;
 Scene *RenderManager::nextScene;
 RenderTexture2D RenderManager::currentSceneTexture;
 RenderTexture2D RenderManager::nextSceneTexture;
+RenderTexture2D RenderManager::modalTexture;
 
 Rectangle RenderManager::CalculateScreenBounds()
 {
@@ -45,14 +46,17 @@ void RenderManager::Init()
     Rectangle gameScreen = CalculateScreenBounds();
     currentSceneTexture = LoadRenderTexture(gameScreen.width, gameScreen.height);
     nextSceneTexture = LoadRenderTexture(gameScreen.width, gameScreen.height);
+    modalTexture = LoadRenderTexture(gameScreen.width, gameScreen.height);
 
     // リサイズ時のコールバック登録
     SystemManager::SetWindowResizeCallback([](int width, int height)
                                            {
         UnloadRenderTexture(currentSceneTexture);
         UnloadRenderTexture(nextSceneTexture);
+        UnloadRenderTexture(modalTexture);
         currentSceneTexture = LoadRenderTexture(width, height);
-        nextSceneTexture = LoadRenderTexture(width, height); });
+        nextSceneTexture = LoadRenderTexture(width, height); 
+        modalTexture = LoadRenderTexture(width, height); });
 }
 
 void RenderManager::Update()
@@ -96,8 +100,11 @@ void RenderManager::Update()
     // モーダル描画
     if (ModalManager::ModalExists())
     {
+        BeginTextureMode(modalTexture);
         Modal *modal = ModalManager::GetFirstModal();
-        modal->Draw();
+        modal->Draw({gameScreen.width, gameScreen.height});
+        EndTextureMode();
+        DrawTextureRec(modalTexture.texture, (Rectangle){0, 0, gameScreen.width, -gameScreen.height}, (Vector2){gameScreen.x, gameScreen.y}, WHITE);
     }
 
     // デバッグ要素描画

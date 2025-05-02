@@ -2,26 +2,42 @@
 
 #include <list>
 #include "input.hpp"
+#include "raylib.h"
+#include "setting.hpp"
 
-Modal::Modal(std::string message, std::string leftButtonText, std::string rightButtonText, std::function<void()> leftButtonCallback, std::function<void()> rightButtonCallback, bool defaultLeftSelected)
+Modal::Modal(std::string message, std::string buttonText, std::function<void()> buttonCallback)
 {
-    this->message = message;
-    this->leftButtonText = leftButtonText;
-    this->rightButtonText = rightButtonText;
-    this->leftButtonCallback = leftButtonCallback;
-    this->rightButtonCallback = rightButtonCallback;
-    this->defaultLeftSelected = defaultLeftSelected;
+    messageText = new Text({0.500, 0.438, 0.500, 0.058}, message.c_str());
+    leftButton = new Button({0.5, 0.540, 0.221, 0.076}, buttonText.c_str());
+}
 
-    messageText = new Text({0.500, 0.414, 0.476, 0.386}, message.c_str());
-    leftButton = new Button({0.500, 0.685, 0.396, 0.076}, leftButtonText.c_str());
-    rightButton = new Button({0.500, 0.685 + 0.396 + 0.025, 0.396, 0.076}, rightButtonText.c_str());
+Modal::Modal(std::string message, std::string leftButtonText, std::string rightButtonText, std::function<void()> leftButtonCallback, std::function<void()> rightButtonCallback)
+{
+    messageText = new Text({0.500, 0.438, 0.500, 0.058}, message.c_str());
+    leftButton = new Button({0.381, 0.540, 0.221, 0.076}, leftButtonText.c_str());
+    rightButton = new Button({0.619, 0.540, 0.221, 0.076}, rightButtonText.c_str());
 
     leftButton->SetNavigation(nullptr, nullptr, nullptr, rightButton);
     rightButton->SetNavigation(nullptr, nullptr, leftButton, nullptr);
+
+    leftButton->OnClick = leftButtonCallback;
+    rightButton->OnClick = rightButtonCallback;
 }
 
-void Modal::Draw()
+void Modal::Draw(Vector2 size)
 {
+    Rectangle modalBounds = UI::GetScreenBounds(size, {0.5f, 0.5f, 0.5f, 0.247f});
+
+    DrawRectangleRec(modalBounds, SettingManager::GetColor(ColorPallet::Sub));
+    DrawRectangleLines(modalBounds.x, modalBounds.y, modalBounds.width, modalBounds.height, SettingManager::GetColor(ColorPallet::Main));
+
+    messageText->Draw(size);
+
+    leftButton->Draw(size);
+    if (rightButton != nullptr)
+    {
+        rightButton->Draw(size);
+    }
 }
 
 std::list<Modal *> ModalManager::modals;
@@ -39,7 +55,7 @@ void ModalManager::EnqueueModal(Modal *modal)
     if (ModalManager::GetFirstModal() == modal)
     {
         InputManager::SetNavigationEnabled(true);
-        InputManager::SetSelectedItem(modal->defaultLeftSelected ? modal->leftButton : modal->rightButton);
+        InputManager::SetSelectedItem(modal->leftButton);
     }
 }
 
@@ -49,7 +65,7 @@ void ModalManager::PushModal(Modal *modal)
 
     // Set Navigation
     InputManager::SetNavigationEnabled(true);
-    InputManager::SetSelectedItem(modal->defaultLeftSelected ? modal->leftButton : modal->rightButton);
+    InputManager::SetSelectedItem(modal->leftButton);
 }
 
 void ModalManager::DequeModal()

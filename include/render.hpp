@@ -7,6 +7,7 @@ class RenderManager
 private:
     static RenderTexture2D currentSceneTexture;
     static RenderTexture2D nextSceneTexture;
+    static RenderTexture2D modalTexture;
     static Rectangle CalculateScreenBounds();
 
     static bool shouldCloseWindow;
