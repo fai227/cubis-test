@@ -10,7 +10,7 @@ std::function<void(int, int)> SystemManager::windowResizeCallback = nullptr;
 void SystemManager::Init()
 {
     // ウィンドウ作成
-    InitWindow(DefaultSetting::DEFAULT_WINDOW_SIZE.x, DefaultSetting::DEFAULT_WINDOW_SIZE.y, DisplayText::GAME_TITLE_WITH_VERSION.c_str());
+    InitWindow(DefaultSetting::DEFAULT_WINDOW_SIZE.x, DefaultSetting::DEFAULT_WINDOW_SIZE.y, GameTitleText::GAME_TITLE.c_str());
     SetWindowMinSize(Constants::MANIMUM_WINDOW_WIDTH, Constants::MANIMUM_WINDOW_HEIGHT);
     SetExitKey(0);
 

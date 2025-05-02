@@ -9,6 +9,8 @@ private:
     static RenderTexture2D nextSceneTexture;
     static Rectangle CalculateScreenBounds();
 
+    static bool shouldCloseWindow;
+
 public:
     static bool isTransitioning;
     static float transitionTimeLeft;

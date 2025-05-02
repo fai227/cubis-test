@@ -4,7 +4,7 @@
 #include "setting.hpp"
 #include "raylib.h"
 
-namespace DisplayText
+namespace ConfigFileText
 {
     const std::string CONFIG_FILE_NAME = "config.ini";
 
@@ -20,22 +20,88 @@ namespace DisplayText
     const std::string GENERAL_SENSITIVITY_DESCRIPTION = "General Sensitivity for Mouse Cursor.";
     const std::string GENERAL_THRESHOLD = "GeneralThreshold";
     const std::string GENERAL_THRESHOLD_DESCRIPTION = "General Threshold for Gamepad Joysticks and Triggers.";
+}
 
-    const std::string GAME_TITLE = "Cubis";
-    const std::string GAME_TITLE_WITH_VERSION = "Cubis [Ver 0.1.0]";
-    const std::string START_BUTTON_TEXT = "Press [Return] / [A] to Start";
+namespace GameTitleText
+{
+    const std::string GAME_TITLE = "Cubis v0.2.0";
+}
 
-    const std::string SWITCH_THEME_BUTTON_TEXT = "Switch Theme";
-
-    const std::string SOLO_BUTTON_TEXT = "Solo";
-    const std::string LOCAL_BUTTON_TEXT = "Local";
-    const std::string ONLINE_BUTTON_TEXT = "Online";
-    const std::string FORTY_LINES_BUTTON_TEXT = "40 Lines";
-    const std::string SCORE_ATTACK_BUTTON_TEXT = "Score Attack";
-    const std::string VS_MODE_BUTTON_TEXT = "VS Mode";
-    const std::string RANKED_MATCH_BUTTON_TEXT = "Ranked Match";
-    const std::string CUSTOM_MATCH_BUTTON_TEXT = "Custom Match";
-    const std::string PLAYER_JOIN_OR_QUIT_TEXT = "Press [Escape] / [+] to Join / Quit";
+namespace UIElementDisplayText
+{
+    const std::string CUBIS = "Cubis";
+    const std::string PRESS_RETURN_OR_A_TO_START = "Press [Return] / [A] to Start";
+    const std::string LOCAL = "Local";
+    const std::string ONLINE = "Online";
+    const std::string EXIT_GAME = "Exit Game";
+    const std::string THEME = "Theme";
+    const std::string SETTING = "Setting";
+    const std::string LEADERBOARD = "Leaderboard";
+    const std::string BATTLE_MODE = "Battle Mode:";
+    const std::string NO_TEXT_1 = ">";
+    const std::string CHANGABLE_TEXT = "#";
+    const std::string NO_TEXT_2 = "<";
+    const std::string PLAYER_COUNT = "Player Count:";
+    const std::string START_GAME = "Start Game";
+    const std::string PRESS_RETURN_OR_PLUS_TO_JOIN_QUIT = "Press [Return] / [+] to Join (Quit)";
+    const std::string BACK_TO_MENU = "Back to Menu";
+    const std::string MOVE_MINO_FORWARD = "Move Mino Forward";
+    const std::string MOVE_MINO_BACKWARD = "Move Mino Backward";
+    const std::string MOVE_MINO_RIGHT = "Move Mino Right";
+    const std::string MOVE_MINO_LEFT = "Move Mino Left";
+    const std::string MOVE_CAMERA_RIGHT = "Move Camera Right";
+    const std::string MOVE_MINO_DOWN = "Move Mino Down";
+    const std::string HOLD_MINO = "Hold Mino";
+    const std::string ROTATE_MINO_YPLUS = "Rotate Mino Y+";
+    const std::string ROTATE_MINO_YMINUS = "Rotate Mino Y-";
+    const std::string ROTATE_MINO_XPLUS = "Rotate Mino X+";
+    const std::string ROTATE_MINO_XMINUS = "Rotate Mino X-";
+    const std::string ROTATE_MINO_ZPLUS = "Rotate Mino Z+";
+    const std::string ROTATE_MINO_ZMINUS = "Rotate Mino Z-";
+    const std::string DROP_MINO = "Drop Mino";
+    const std::string MOVE_CAMERA_LEFT = "Move Camera Left";
+    const std::string MOVE_CAMERA_UP = "Move Camera Up";
+    const std::string MOVE_CAMERA_DOWN = "Move Camera Down";
+    const std::string MOUSE_CURSOR_DOWN = "Mouse Cursor Down";
+    const std::string MOUSE_CURSOR_UP = "Mouse Cursor Up";
+    const std::string MOUSE_CURSOR_LEFT = "Mouse Cursor Left";
+    const std::string MOUSE_CURSOR_RIGHT = "Mouse Cursor Right";
+    const std::string LEFT_SHIFT = "Left Shift";
+    const std::string SPACE = "Space";
+    const std::string LEFT_CLICK = "Left Click";
+    const std::string E = "E";
+    const std::string MOUSE_WHEEL_DOWN = "Mouse Wheel Down";
+    const std::string LEFT_CTRL = "Left Ctrl";
+    const std::string W = "W";
+    const std::string A = "A";
+    const std::string RIGHT_CLICK = "Right Click";
+    const std::string Q = "Q";
+    const std::string MOUSE_WHEEL_UP = "Mouse Wheel Up";
+    const std::string S = "S";
+    const std::string D = "D";
+    const std::string RIGHT_JOYSTICK_DOWN = "Right Joystick Down";
+    const std::string RIGHT_JOYSTICK_UP = "Right Joystick Up";
+    const std::string RIGHT_JOYSTICK_LEFT = "Right Joystick Left";
+    const std::string RIGHT_JOYSTICK_RIGHT = "Right Joystick Right";
+    const std::string LEFT_TRIGGER = "Left Trigger";
+    const std::string RIGHT_TRIGGER = "Right Trigger";
+    const std::string BUTTON_DOWN = "Button Down";
+    const std::string RIGHT_SHOULDER = "Right Shoulder";
+    const std::string DMINUSPAD_DOWN = "D-Pad Down";
+    const std::string LEFT_JOYSTICK_UP = "Left Joystick Up";
+    const std::string LEFT_JOYSTICK_LEFT = "Left Joystick Left";
+    const std::string BUTTON_RIGHT = "Button Right";
+    const std::string LEFT_SHOULDER = "Left Shoulder";
+    const std::string BUTTON_UP = "Button Up";
+    const std::string LEFT_JOYSTICK_DOWN = "Left Joystick Down";
+    const std::string LEFT_JOYSTICK_RIGHT = "Left Joystick Right";
+    const std::string CONTROL = "Control";
+    const std::string GENERAL = "General";
+    const std::string WINDOW_MODE = "Window Mode";
+    const std::string MONITOR = "Monitor";
+    const std::string MAX_FRAMERATE = "Max Framerate";
+    const std::string MOUSE_SENSITIVITY = "Mouse Sensitivity";
+    const std::string CONTROLLER_THRESHOLD = "Controller Threshold";
 }
 
 namespace DefaultSetting
@@ -44,7 +110,7 @@ namespace DefaultSetting
     const WindowMode DEFAULT_WINDOW_MODE = WindowMode::Windowed;
     const int DEFAULT_MONITOR_ID = 1;
     const Vector2 DEFAULT_WINDOW_SIZE = {1280, 720};
-    const int DEFAULT_MAX_FPS = 60;
+    const int DEFAULT_MAX_FPS = 60'000;
     const int DEFAULT_GENERAL_SENSITIVITY = 10;
     const int DEFAULT_GENERAL_THRESHOLD = 5;
 }

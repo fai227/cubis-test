@@ -6,11 +6,11 @@ rini_config SettingManager::config;
 
 void SettingManager::SaveConfig()
 {
-    rini_save_config(config, DisplayText::CONFIG_FILE_NAME.c_str());
+    rini_save_config(config, ConfigFileText::CONFIG_FILE_NAME.c_str());
 }
 void SettingManager::Init()
 {
-    config = rini_load_config(DisplayText::CONFIG_FILE_NAME.c_str());
+    config = rini_load_config(ConfigFileText::CONFIG_FILE_NAME.c_str());
 
     UpdateWindow();
     UpdateMaxFPS();
@@ -26,13 +26,13 @@ void SettingManager::Unload()
 
 void SettingManager::SetTheme(Theme theme)
 {
-    rini_set_config_value(&config, DisplayText::THEME.c_str(), static_cast<int>(theme), DisplayText::THEME_DESCRIPTION.c_str());
+    rini_set_config_value(&config, ConfigFileText::THEME.c_str(), static_cast<int>(theme), ConfigFileText::THEME_DESCRIPTION.c_str());
     SaveConfig();
 }
 
 Theme SettingManager::GetTheme()
 {
-    int theme = rini_get_config_value(config, DisplayText::THEME.c_str());
+    int theme = rini_get_config_value(config, ConfigFileText::THEME.c_str());
 
     if (theme < 0 || theme >= static_cast<int>(Theme::Count))
     {
@@ -110,7 +110,7 @@ Color SettingManager::GetColor(ColorPallet colorPallet)
 
 WindowMode SettingManager::GetWindowMode()
 {
-    int windowMode = rini_get_config_value(config, DisplayText::WINDOW_MODE.c_str());
+    int windowMode = rini_get_config_value(config, ConfigFileText::WINDOW_MODE.c_str());
 
     if (windowMode < 0 || windowMode >= static_cast<int>(WindowMode::Count))
     {
@@ -128,7 +128,7 @@ WindowMode SettingManager::GetWindowMode()
 
 void SettingManager::SetWindowMode(WindowMode windowMode)
 {
-    rini_set_config_value(&config, DisplayText::WINDOW_MODE.c_str(), static_cast<int>(windowMode), DisplayText::WINDOW_MODE_DESCRIPTION.c_str());
+    rini_set_config_value(&config, ConfigFileText::WINDOW_MODE.c_str(), static_cast<int>(windowMode), ConfigFileText::WINDOW_MODE_DESCRIPTION.c_str());
     SaveConfig();
 
     UpdateWindow();
@@ -136,7 +136,7 @@ void SettingManager::SetWindowMode(WindowMode windowMode)
 
 int SettingManager::GetMonitorID()
 {
-    int monitorID = rini_get_config_value(config, DisplayText::MONITOR_ID.c_str());
+    int monitorID = rini_get_config_value(config, ConfigFileText::MONITOR_ID.c_str());
 
     if (monitorID < 0 || monitorID > GetMonitorCount())
     {
@@ -154,7 +154,7 @@ int SettingManager::GetMonitorID()
 
 void SettingManager::SetMonitorID(int monitorID)
 {
-    rini_set_config_value(&config, DisplayText::MONITOR_ID.c_str(), monitorID, DisplayText::MONITOR_ID_DESCRIPTION.c_str());
+    rini_set_config_value(&config, ConfigFileText::MONITOR_ID.c_str(), monitorID, ConfigFileText::MONITOR_ID_DESCRIPTION.c_str());
     SaveConfig();
 
     UpdateWindow();
@@ -162,7 +162,7 @@ void SettingManager::SetMonitorID(int monitorID)
 
 int SettingManager::GetMaxFPS()
 {
-    int targetFPS = rini_get_config_value(config, DisplayText::MAX_FPS.c_str());
+    int targetFPS = rini_get_config_value(config, ConfigFileText::MAX_FPS.c_str());
 
     if (targetFPS < 0)
     {
@@ -180,7 +180,7 @@ int SettingManager::GetMaxFPS()
 
 void SettingManager::SetMaxFPS(int targetFPS)
 {
-    rini_set_config_value(&config, DisplayText::MAX_FPS.c_str(), targetFPS, DisplayText::MAX_FPS_DESCRIPTION.c_str());
+    rini_set_config_value(&config, ConfigFileText::MAX_FPS.c_str(), targetFPS, ConfigFileText::MAX_FPS_DESCRIPTION.c_str());
     SaveConfig();
 
     UpdateMaxFPS();
@@ -188,7 +188,7 @@ void SettingManager::SetMaxFPS(int targetFPS)
 
 int SettingManager::GetGeneralSensitivity()
 {
-    int sensitivity = rini_get_config_value(config, DisplayText::GENERAL_SENSITIVITY.c_str());
+    int sensitivity = rini_get_config_value(config, ConfigFileText::GENERAL_SENSITIVITY.c_str());
 
     if (sensitivity < 0 || sensitivity > 20)
     {
@@ -206,7 +206,7 @@ int SettingManager::GetGeneralSensitivity()
 
 void SettingManager::SetGeneralSensitivity(int sensitivity)
 {
-    rini_set_config_value(&config, DisplayText::GENERAL_SENSITIVITY.c_str(), sensitivity, DisplayText::GENERAL_SENSITIVITY_DESCRIPTION.c_str());
+    rini_set_config_value(&config, ConfigFileText::GENERAL_SENSITIVITY.c_str(), sensitivity, ConfigFileText::GENERAL_SENSITIVITY_DESCRIPTION.c_str());
     SaveConfig();
 }
 
@@ -226,7 +226,7 @@ float SettingManager::GetGeneralSensitivityFloat()
 
 int SettingManager::GetGeneralThreshold()
 {
-    int threshold = rini_get_config_value(config, DisplayText::GENERAL_THRESHOLD.c_str());
+    int threshold = rini_get_config_value(config, ConfigFileText::GENERAL_THRESHOLD.c_str());
 
     if (threshold < 0 || threshold > 10)
     {
@@ -244,7 +244,7 @@ int SettingManager::GetGeneralThreshold()
 
 void SettingManager::SetGeneralThreshold(int threshold)
 {
-    rini_set_config_value(&config, DisplayText::GENERAL_THRESHOLD.c_str(), threshold, DisplayText::GENERAL_THRESHOLD_DESCRIPTION.c_str());
+    rini_set_config_value(&config, ConfigFileText::GENERAL_THRESHOLD.c_str(), threshold, ConfigFileText::GENERAL_THRESHOLD_DESCRIPTION.c_str());
     SaveConfig();
 }
 

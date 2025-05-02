@@ -37,6 +37,13 @@ public:
     void Enable() override;
 };
 
+class OptionScene : public Scene
+{
+public:
+    OptionScene();
+    void Enable() override;
+};
+
 class GameScene : public Scene
 {
 public:

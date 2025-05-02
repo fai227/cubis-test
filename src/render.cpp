@@ -94,13 +94,11 @@ void RenderManager::Update()
     }
 
     // モーダル描画
-    /*
     if (ModalManager::ModalExists())
     {
         Modal *modal = ModalManager::GetFirstModal();
         modal->Draw();
     }
-    */
 
     // デバッグ要素描画
     DebugManager::Update();

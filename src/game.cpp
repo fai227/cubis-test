@@ -10,6 +10,8 @@
 #include "input.hpp"
 #include "render.hpp"
 
+bool Game::shouldExit = false;
+
 void Game::Init()
 {
     SystemManager::Init();
@@ -23,7 +25,7 @@ void Game::Init()
 
 void Game::Mainloop()
 {
-    while (!WindowShouldClose())
+    while (!WindowShouldClose() && !shouldExit)
     {
         SystemManager::Update();
         SettingManager::Update();
@@ -51,4 +53,9 @@ void Game::Run()
     Init();
     Mainloop();
     Unload();
+}
+
+void Game::RequestExit()
+{
+    shouldExit = true;
 }

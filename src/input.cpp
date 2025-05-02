@@ -4,6 +4,7 @@
 #include "util.hpp"
 #include <algorithm>
 #include "setting.hpp"
+#include "magic_enum.hpp"
 
 bool InputManager::isNavigationEnabled = false;
 Button *InputManager::selectedButton = nullptr;
@@ -167,10 +168,37 @@ void InputManager::UpdatePause()
 
 void InputManager::UpdateAnyCKeyboardMouse()
 {
+    if (keyboardMouseAnyButtonCallback == nullptr)
+    {
+        return;
+    }
+
+    for (CKeyboardMouse key : magic_enum::enum_values<CKeyboardMouse>())
+    {
+        if (IsCKeyboardMousePressed(key) > 0.0f)
+        {
+            keyboardMouseAnyButtonCallback(key);
+            break;
+        }
+    }
 }
 
 void InputManager::UpdateAnyCGamepad()
 {
+    if (gamePadAnyButtonCallback == nullptr)
+    {
+        return;
+    }
+
+    for (CGamepad key : magic_enum::enum_values<CGamepad>())
+    {
+        int gamepadID = GetCGamepadPressed(key);
+        if (gamepadID >= 0)
+        {
+            gamePadAnyButtonCallback(key);
+            break;
+        }
+    }
 }
 
 void InputManager::Init()
