@@ -22,6 +22,11 @@ void Text::Draw(Vector2 size)
     UI::DrawTextInsideRectangle(realBounds, label, SettingManager::GetColor(ColorPallet::Main));
 }
 
+void Text::ChangeText(std::string _label)
+{
+    label = _label;
+}
+
 Button::Button(Rectangle _bounds, std::string _label)
 {
     isEnabled = true;

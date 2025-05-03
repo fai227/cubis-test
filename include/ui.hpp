@@ -23,6 +23,7 @@ private:
 public:
     Text(Rectangle _bounds, std::string _label);
     void Draw(Vector2 size) override;
+    void ChangeText(std::string _label);
 };
 
 class Button : public UIElement

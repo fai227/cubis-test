@@ -8,6 +8,7 @@
 #include "input.hpp"
 #include "game.hpp"
 #include "modal.hpp"
+#include "rule.hpp"
 
 Scene::Scene()
 {
@@ -143,6 +144,41 @@ MenuScene::MenuScene()
         InputManager::SetNavigationEnabled(false);
         InputManager::RemoveSelectedItem();
         RenderManager::TransitToNextScene(new LeaderboardScene());
+    };
+
+    button5->OnClick = [text3]()
+    {
+        GameMode nextGameMode = RuleManager::GetNextGameMode(true);
+        RuleManager::SetGameMode(nextGameMode);
+        text3->ChangeText(RuleManager::ConvertGameModeToString(nextGameMode));
+    };
+    text3->ChangeText(RuleManager::ConvertGameModeToString(RuleManager::GetGameMode()));
+    button6->OnClick = [text3]()
+    {
+        GameMode nextGameMode = RuleManager::GetNextGameMode(false);
+        RuleManager::SetGameMode(nextGameMode);
+        text3->ChangeText(RuleManager::ConvertGameModeToString(nextGameMode));
+    };
+
+    button7->OnClick = [text5]()
+    {
+        int nextPlayerCount = RuleManager::GetNextPlayerCount(true);
+        RuleManager::SetPlayerCount(nextPlayerCount);
+        text5->ChangeText(RuleManager::ConvertPlayerCountToString(nextPlayerCount));
+    };
+    text5->ChangeText(std::to_string(RuleManager::GetPlayerCount()));
+    button8->OnClick = [text5]()
+    {
+        int nextPlayerCount = RuleManager::GetNextPlayerCount(false);
+        RuleManager::SetPlayerCount(nextPlayerCount);
+        text5->ChangeText(RuleManager::ConvertPlayerCountToString(nextPlayerCount));
+    };
+
+    button9->OnClick = []()
+    {
+        InputManager::SetNavigationEnabled(false);
+        InputManager::RemoveSelectedItem();
+        RenderManager::TransitToNextScene(new GameScene());
     };
 }
 

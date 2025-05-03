@@ -22,9 +22,13 @@ namespace ConfigFileText
     const std::string GENERAL_THRESHOLD_DESCRIPTION = "General Threshold for Gamepad Joysticks and Triggers.";
 }
 
-namespace GameTitleText
+namespace GameText
 {
     const std::string GAME_TITLE = "Cubis v0.2.0";
+
+    const std::string FOURTY_LINES = "40 Lines";
+    const std::string SCORE_ATTACK = "Score Attack";
+    const std::string VERSUS = "Versus";
 }
 
 namespace UIElementDisplayText
@@ -123,6 +127,8 @@ namespace Constants
     const float MAX_TEXT_SIZE_IN_BOUNDS = 0.75f;
 
     const float TRANSITION_DURATION = 1.0f;
+
+    const int MAX_PLAYER_COUNT = 4;
 }
 
 namespace GameColor

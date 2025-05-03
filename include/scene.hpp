@@ -53,6 +53,4 @@ public:
 
 class GameScene : public Scene
 {
-public:
-    GameScene();
 };
