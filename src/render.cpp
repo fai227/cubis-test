@@ -80,7 +80,7 @@ void RenderManager::Update()
 
     // 画面描画
     BeginDrawing();
-    ClearBackground(SettingManager::GetColor(ColorPallet::Main));
+    ClearBackground(SettingManager::GetColor(ColorPallet::Sub));
     if (isTransitioning)
     {
         float transitionRatio = transitionTimeLeft / Constants::TRANSITION_DURATION;

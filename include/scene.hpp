@@ -35,6 +35,7 @@ class MenuScene : public Scene
 public:
     MenuScene();
     void Enable() override;
+    void Update(Vector2 size) override;
 };
 
 class LeaderboardScene : public Scene

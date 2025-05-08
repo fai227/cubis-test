@@ -1,6 +1,4 @@
 #define RINI_IMPLEMENTATION
-// #define RRES_RAYLIB_IMPLEMENTATION
-// #define RRES_IMPLEMENTATION
 
 #include "raylib.h"
 #include "game.hpp"
@@ -8,6 +6,7 @@
 #include "setting.hpp"
 #include "audio.hpp"
 #include "input.hpp"
+#include "player.hpp"
 #include "render.hpp"
 
 bool Game::shouldExit = false;
@@ -18,6 +17,7 @@ void Game::Init()
     SettingManager::Init();
 
     InputManager::Init();
+    PlayerManager::Init();
 
     AudioManager::Init();
     RenderManager::Init();
@@ -31,6 +31,7 @@ void Game::Mainloop()
         SettingManager::Update();
 
         InputManager::Update();
+        PlayerManager::Update();
 
         AudioManager::Update();
         RenderManager::Update();
@@ -43,6 +44,7 @@ void Game::Unload()
     SettingManager::Unload();
 
     InputManager::Unload();
+    PlayerManager::Unload();
 
     AudioManager::Unload();
     RenderManager::Unload();

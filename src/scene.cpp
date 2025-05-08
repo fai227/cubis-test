@@ -9,6 +9,7 @@
 #include "game.hpp"
 #include "modal.hpp"
 #include "rule.hpp"
+#include "player.hpp"
 
 Scene::Scene()
 {
@@ -174,11 +175,35 @@ MenuScene::MenuScene()
         text5->ChangeText(RuleManager::ConvertPlayerCountToString(nextPlayerCount));
     };
 
-    button9->OnClick = []()
+    button9->OnClick = [button9]()
     {
-        InputManager::SetNavigationEnabled(false);
-        InputManager::RemoveSelectedItem();
-        RenderManager::TransitToNextScene(new GameScene());
+        // Check if there are enough players to start the game
+        if (RuleManager::GetPlayerCount() > PlayerManager::GetPlayerCount())
+        {
+            Modal *modal = new Modal("Not enough players to start the game.", "OK", [button9]()
+                                     {
+                InputManager::SetNavigationEnabled(true);
+                InputManager::SetSelectedItem(button9);
+                ModalManager::DequeModal(); });
+            ModalManager::EnqueueModal(modal);
+        }
+        // Check if the game mode is valid
+        else if (RuleManager::GetGameMode() == GameMode::Versus && RuleManager::GetPlayerCount() < 2)
+        {
+            Modal *modal = new Modal("Not enough players for Versus mode.", "OK", [button9]()
+                                     {
+                InputManager::SetNavigationEnabled(true);
+                InputManager::SetSelectedItem(button9);
+                ModalManager::DequeModal(); });
+            ModalManager::EnqueueModal(modal);
+        }
+        else
+        {
+            InputManager::SetNavigationEnabled(false);
+            InputManager::RemoveSelectedItem();
+            PlayerManager::DisablePlayerJoin();
+            RenderManager::TransitToNextScene(new GameScene());
+        }
     };
 }
 
@@ -186,6 +211,30 @@ void MenuScene::Enable()
 {
     InputManager::SetNavigationEnabled(true);
     InputManager::SetSelectedItem(static_cast<Button *>(uiElements[4]));
+    PlayerManager::EnablePlayerJoin();
+}
+
+void MenuScene::Update(Vector2 size)
+{
+    Scene::Update(size);
+
+    // Draw Players
+    for (int i = 1; i <= PlayerManager::GetPlayerCount(); i++)
+    {
+        float playerBannerWidth = 1.0f / Constants::MAX_PLAYER_COUNT;
+        float playerBannerHeight = 0.2f;
+        Rectangle playerBanner = {playerBannerWidth * i - playerBannerWidth * 0.5f, 0.9f, playerBannerWidth, playerBannerHeight};
+        Color color = SettingManager::GetColor(SettingManager::GetPlayerColor(i));
+
+        Rectangle realBanner = UI::GetScreenBounds(size, playerBanner);
+        DrawRectangleRec(realBanner, color);
+
+        Rectangle playerIDTextBounds = {realBanner.x, realBanner.y, realBanner.width, realBanner.height / 2.0f};
+        UI::DrawTextInsideRectangle(playerIDTextBounds, "Player " + std::to_string(i), SettingManager::GetColor(ColorPallet::Main));
+
+        Rectangle controllerTextBounds = {realBanner.x, realBanner.y + realBanner.height / 2.0f, realBanner.width, realBanner.height / 2.0f};
+        UI::DrawTextInsideRectangle(controllerTextBounds, PlayerManager::GetPlayerControllerName(i - 1), SettingManager::GetColor(ColorPallet::Main));
+    }
 }
 
 LeaderboardScene::LeaderboardScene()
@@ -437,6 +486,77 @@ OptionScene::OptionScene()
         InputManager::SetNavigationEnabled(false);
         InputManager::RemoveSelectedItem();
         RenderManager::TransitToNextScene(new MenuScene());
+    };
+
+    text22->ChangeText(SettingManager::ConvertWindowModeToString(SettingManager::GetWindowMode()));
+    button36->OnClick = [text22]()
+    {
+        WindowMode nextWindowMode = SettingManager::GetNextWindowMode(false);
+        SettingManager::SetWindowMode(nextWindowMode);
+        text22->ChangeText(SettingManager::ConvertWindowModeToString(nextWindowMode));
+    };
+
+    button37->OnClick = [text22]()
+    {
+        WindowMode nextWindowMode = SettingManager::GetNextWindowMode(true);
+        SettingManager::SetWindowMode(nextWindowMode);
+        text22->ChangeText(SettingManager::ConvertWindowModeToString(nextWindowMode));
+    };
+
+    text24->ChangeText(SettingManager::ConvertMonitorIDToString(SettingManager::GetMonitorID()));
+    button38->OnClick = [text24]()
+    {
+        int nextMonitorID = SettingManager::GetNextMonitorID(false);
+        SettingManager::SetMonitorID(nextMonitorID);
+        text24->ChangeText(SettingManager::ConvertMonitorIDToString(nextMonitorID));
+    };
+    button39->OnClick = [text24]()
+    {
+        int nextMonitorID = SettingManager::GetNextMonitorID(true);
+        SettingManager::SetMonitorID(nextMonitorID);
+        text24->ChangeText(SettingManager::ConvertMonitorIDToString(nextMonitorID));
+    };
+
+    text26->ChangeText(SettingManager::ConvertMaxFPSToString(SettingManager::GetMaxFPS()));
+    button40->OnClick = [text26]()
+    {
+        int nextMaxFPS = SettingManager::GetNextMaxFPS(false);
+        SettingManager::SetMaxFPS(nextMaxFPS);
+        text26->ChangeText(SettingManager::ConvertMaxFPSToString(nextMaxFPS));
+    };
+    button41->OnClick = [text26]()
+    {
+        int nextMaxFPS = SettingManager::GetNextMaxFPS(true);
+        SettingManager::SetMaxFPS(nextMaxFPS);
+        text26->ChangeText(SettingManager::ConvertMaxFPSToString(nextMaxFPS));
+    };
+
+    text28->ChangeText(SettingManager::ConvertGeneralThresholdToString(SettingManager::GetGeneralSensitivity()));
+    button42->OnClick = [text28]()
+    {
+        int nextGeneralThreshold = SettingManager::GetNextGeneralSensitivity(false);
+        SettingManager::SetGeneralSensitivity(nextGeneralThreshold);
+        text28->ChangeText(SettingManager::ConvertGeneralThresholdToString(nextGeneralThreshold));
+    };
+    button43->OnClick = [text28]()
+    {
+        int nextGeneralThreshold = SettingManager::GetNextGeneralSensitivity(true);
+        SettingManager::SetGeneralSensitivity(nextGeneralThreshold);
+        text28->ChangeText(SettingManager::ConvertGeneralThresholdToString(nextGeneralThreshold));
+    };
+
+    text32->ChangeText(SettingManager::ConvertGeneralThresholdToString(SettingManager::GetGeneralThreshold()));
+    button46->OnClick = [text32]()
+    {
+        int nextGeneralThreshold = SettingManager::GetNextGeneralThreshold(false);
+        SettingManager::SetGeneralThreshold(nextGeneralThreshold);
+        text32->ChangeText(SettingManager::ConvertGeneralThresholdToString(nextGeneralThreshold));
+    };
+    button47->OnClick = [text32]()
+    {
+        int nextGeneralThreshold = SettingManager::GetNextGeneralThreshold(true);
+        SettingManager::SetGeneralThreshold(nextGeneralThreshold);
+        text32->ChangeText(SettingManager::ConvertGeneralThresholdToString(nextGeneralThreshold));
     };
 }
 

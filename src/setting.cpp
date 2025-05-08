@@ -126,6 +126,16 @@ WindowMode SettingManager::GetWindowMode()
     return static_cast<WindowMode>(windowMode);
 }
 
+WindowMode SettingManager::GetNextWindowMode(bool isNext)
+{
+    WindowMode windowMode = SettingManager::GetWindowMode();
+    if (windowMode == WindowMode::Windowed)
+    {
+        return WindowMode::Borderless;
+    }
+    return WindowMode::Windowed;
+}
+
 void SettingManager::SetWindowMode(WindowMode windowMode)
 {
     rini_set_config_value(&config, ConfigFileText::WINDOW_MODE.c_str(), static_cast<int>(windowMode), ConfigFileText::WINDOW_MODE_DESCRIPTION.c_str());
@@ -150,6 +160,16 @@ int SettingManager::GetMonitorID()
     }
 
     return monitorID;
+}
+
+int SettingManager::GetNextMonitorID(bool isNext)
+{
+    int monitorID = SettingManager::GetMonitorID();
+    if (isNext)
+    {
+        return (monitorID % GetMonitorCount()) + 1;
+    }
+    return (monitorID - 2 + GetMonitorCount()) % GetMonitorCount() + 1;
 }
 
 void SettingManager::SetMonitorID(int monitorID)
@@ -178,6 +198,67 @@ int SettingManager::GetMaxFPS()
     return targetFPS;
 }
 
+int SettingManager::GetNextMaxFPS(bool isNext)
+{
+    // 30 50 60 75 120 144 165 240 360 480
+    int targetFPS = SettingManager::GetMaxFPS();
+    if (isNext)
+    {
+        switch (targetFPS)
+        {
+        case 30:
+            return 50;
+        case 50:
+            return 60;
+        case 60:
+            return 75;
+        case 75:
+            return 120;
+        case 120:
+            return 144;
+        case 144:
+            return 165;
+        case 165:
+            return 240;
+        case 240:
+            return 360;
+        case 360:
+            return 480;
+        case 480:
+            return 30;
+        }
+    }
+    else
+    {
+        switch (targetFPS)
+        {
+        case 30:
+            return 480;
+        case 50:
+            return 30;
+        case 60:
+            return 50;
+        case 75:
+            return 60;
+        case 120:
+            return 75;
+        case 144:
+            return 120;
+        case 165:
+            return 144;
+        case 240:
+            return 165;
+        case 360:
+            return 240;
+        case 480:
+            return 360;
+        }
+    }
+
+    TraceLog(LOG_WARNING, "SettingManager::GetNextMaxFPS: Invalid targetFPS: %d", targetFPS);
+    return DefaultSetting::DEFAULT_MAX_FPS;
+}
+
 void SettingManager::SetMaxFPS(int targetFPS)
 {
     rini_set_config_value(&config, ConfigFileText::MAX_FPS.c_str(), targetFPS, ConfigFileText::MAX_FPS_DESCRIPTION.c_str());
@@ -202,6 +283,16 @@ int SettingManager::GetGeneralSensitivity()
     }
 
     return sensitivity;
+}
+
+int SettingManager::GetNextGeneralSensitivity(bool isNext)
+{
+    int sensitivity = SettingManager::GetGeneralSensitivity();
+    if (isNext)
+    {
+        return (sensitivity % 20) + 1;
+    }
+    return (sensitivity - 2 + 20) % 20 + 1;
 }
 
 void SettingManager::SetGeneralSensitivity(int sensitivity)
@@ -248,6 +339,16 @@ void SettingManager::SetGeneralThreshold(int threshold)
     SaveConfig();
 }
 
+int SettingManager::GetNextGeneralThreshold(bool isNext)
+{
+    int threshold = SettingManager::GetGeneralThreshold();
+    if (isNext)
+    {
+        return (threshold % 10) + 1;
+    }
+    return (threshold - 2 + 10) % 10 + 1;
+}
+
 float SettingManager::GetGeneralThresholdFloat()
 {
     int threshold = SettingManager::GetGeneralThreshold();
@@ -285,4 +386,56 @@ void SettingManager::UpdateWindow()
 void SettingManager::UpdateMaxFPS()
 {
     SetTargetFPS(SettingManager::GetMaxFPS());
+}
+
+std::string SettingManager::ConvertWindowModeToString(WindowMode windowMode)
+{
+    switch (windowMode)
+    {
+    case WindowMode::Windowed:
+        return GameText::WINDOWED.c_str();
+    case WindowMode::Borderless:
+        return GameText::BORDERLESS.c_str();
+    }
+
+    TraceLog(LOG_WARNING, "SettingManager::ConvertWindowModeToString: Invalid windowMode: %d", static_cast<int>(windowMode));
+    return SettingManager::ConvertWindowModeToString(DefaultSetting::DEFAULT_WINDOW_MODE);
+}
+
+std::string SettingManager::ConvertMonitorIDToString(int monitorID)
+{
+    return std::to_string(monitorID);
+}
+
+std::string SettingManager::ConvertMaxFPSToString(int maxFPS)
+{
+    return std::to_string(maxFPS);
+}
+
+std::string SettingManager::ConvertGeneralSensitivityToString(int sensitivity)
+{
+    return std::to_string(sensitivity);
+}
+
+std::string SettingManager::ConvertGeneralThresholdToString(int threshold)
+{
+    return std::to_string(threshold);
+}
+
+ColorPallet SettingManager::GetPlayerColor(int playerID)
+{
+    switch (playerID)
+    {
+    case 1:
+        return ColorPallet::Red;
+    case 2:
+        return ColorPallet::Green;
+    case 3:
+        return ColorPallet::Yellow;
+    case 4:
+        return ColorPallet::Cyan;
+    }
+
+    TraceLog(LOG_WARNING, "SettingManager::GetPlayerColor: Invalid playerID: %d", playerID);
+    return ColorPallet::Sub;
 }

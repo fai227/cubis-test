@@ -29,6 +29,12 @@ namespace GameText
     const std::string FOURTY_LINES = "40 Lines";
     const std::string SCORE_ATTACK = "Score Attack";
     const std::string VERSUS = "Versus";
+
+    const std::string WINDOWED = "Windowed";
+    const std::string BORDERLESS = "Borderless";
+
+    const std::string KEYBOARD_AND_MOUSE = "Keyboard & Mouse";
+    const std::string INVALID_INPUT = "Invalid Input";
 }
 
 namespace UIElementDisplayText
@@ -45,7 +51,7 @@ namespace UIElementDisplayText
     const std::string NO_TEXT_2 = "<";
     const std::string PLAYER_COUNT = "Player Count:";
     const std::string START_GAME = "Start Game";
-    const std::string PRESS_RETURN_OR_PLUS_TO_JOIN_QUIT = "Press [Return] / [+] to Join (Quit)";
+    const std::string PRESS_RETURN_OR_PLUS_TO_JOIN_QUIT = "Press [Escape] / [+] to Join (Quit)";
     const std::string BACK_TO_MENU = "Back to Menu";
     const std::string MOVE_MINO_FORWARD = "Move Mino Forward";
     const std::string MOVE_MINO_BACKWARD = "Move Mino Backward";
@@ -112,7 +118,7 @@ namespace DefaultSetting
     const WindowMode DEFAULT_WINDOW_MODE = WindowMode::Windowed;
     const int DEFAULT_MONITOR_ID = 1;
     const Vector2 DEFAULT_WINDOW_SIZE = {1280, 720};
-    const int DEFAULT_MAX_FPS = 60'000;
+    const int DEFAULT_MAX_FPS = 60;
     const int DEFAULT_GENERAL_SENSITIVITY = 10;
     const int DEFAULT_GENERAL_THRESHOLD = 5;
 }

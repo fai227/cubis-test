@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "setting.hpp"
 #include "magic_enum.hpp"
+#include "constants.hpp"
 
 bool InputManager::isNavigationEnabled = false;
 Button *InputManager::selectedButton = nullptr;
@@ -247,6 +248,11 @@ void InputManager::RemoveSelectedItem()
 void InputManager::SetPauseCallback(std::function<void(int)> callback)
 {
     pauseCallback = callback;
+}
+
+void InputManager::RemovePauseCallback()
+{
+    pauseCallback = nullptr;
 }
 
 void InputManager::SetAnyCKeyboardMouseCallback(std::function<void(CKeyboardMouse)> callback)
@@ -505,4 +511,20 @@ float InputManager::IsCGamepadDown(CGamepad key, int gamepad, float threshold)
 
     TraceLog(LOG_WARNING, "InputManager::IsCGamepadDown: Invalid key ID: %d", keyId);
     return 0.0f;
+}
+
+std::string InputManager::GetInputName(int inputID)
+{
+    if (inputID < 0)
+    {
+        return GameText::KEYBOARD_AND_MOUSE.c_str();
+    }
+
+    if (IsGamepadAvailable(inputID))
+    {
+        return GetGamepadName(inputID);
+    }
+
+    TraceLog(LOG_WARNING, "InputManager::GetInputName: Invalid input ID: %d", inputID);
+    return GameText::INVALID_INPUT.c_str();
 }

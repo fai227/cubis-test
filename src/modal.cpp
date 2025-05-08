@@ -9,6 +9,10 @@ Modal::Modal(std::string message, std::string buttonText, std::function<void()> 
 {
     messageText = new Text({0.500, 0.438, 0.500, 0.058}, message.c_str());
     leftButton = new Button({0.5, 0.540, 0.221, 0.076}, buttonText.c_str());
+    rightButton = nullptr;
+
+    leftButton->OnClick = buttonCallback;
+    rightButton = nullptr;
 }
 
 Modal::Modal(std::string message, std::string leftButtonText, std::string rightButtonText, std::function<void()> leftButtonCallback, std::function<void()> rightButtonCallback)

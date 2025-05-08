@@ -248,4 +248,6 @@ public:
     static float IsCKeyboardMouseDown(CKeyboardMouse key, float sensitivity = 1.0f);
     static float IsCGamepadPressed(CGamepad key, int gamepad, float threshold = 0.0f);
     static float IsCGamepadDown(CGamepad key, int gamepad, float threshold = 0.0f);
+
+    static std::string GetInputName(int inputID);
 };
