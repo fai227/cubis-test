@@ -15,7 +15,7 @@ void SystemManager::Init()
     SetExitKey(0);
 
     // マウスカーソル非表示
-    DisableCursor();
+    // DisableCursor();
 }
 
 void SystemManager::Update()
